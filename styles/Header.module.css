@@ -1,0 +1,22 @@
+.header {
+  width: 100%;
+  background-color: rgb(230, 230, 230);
+  padding: 0.75em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.container h1 {
+  margin: 0;
+}
+.container a {
+  margin-right: 1.2em;
+}
