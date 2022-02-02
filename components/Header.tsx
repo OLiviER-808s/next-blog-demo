@@ -2,9 +2,12 @@ import Link from "next/link"
 import styles from '../styles/Header.module.css'
 import useScreenWidth from "../lib/screen-width"
 import Image from "next/image";
+import { useContext } from "react";
+import { SidebarUpdateContext } from "../lib/SidebarProvider";
 
 const Header = () => {
   const isHandheld =  useScreenWidth();
+  const toggleSidebar = useContext(SidebarUpdateContext)
 
   return (
     <header className={styles.header}>
@@ -14,7 +17,9 @@ const Header = () => {
         <div className="spacer"></div>
 
         { isHandheld ? (
-          <p>dropdown</p>
+          <button className="icon-btn" onClick={toggleSidebar}>
+            <Image src="/icons/menu.svg" width={30} height={30}/>
+          </button>
         ) : (
           <>
             <Link href="about">About</Link>
