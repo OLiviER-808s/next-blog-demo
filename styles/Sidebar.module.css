@@ -5,4 +5,18 @@
   background-color: rgb(230, 230, 230);
   left: 100%;
   transform: translateX(-200px);
+  transition: 0.5s;
+  padding: 1.4em 1em;
+  box-shadow: 5px;
+}
+
+.sidebar div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.sidebar h2 {
+  margin: 0;
+  margin-left: 0.5em;
 }
