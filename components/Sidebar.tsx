@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { SidebarOpenContext, SidebarUpdateContext } from '../lib/SidebarProvider'
 import styles from '../styles/Sidebar.module.css'
+import MenuIcon from '../public/icons/menu_open.svg'
 
 const Sidebar = () => {
   const isOpen = useContext(SidebarOpenContext)
@@ -11,8 +12,8 @@ const Sidebar = () => {
   return (
     <div hidden={!isOpen} className={styles.sidebar}>
       <div>
-        <button className="icon-btn" onClick={close}>
-          <Image src="/icons/menu.svg" width={30} height={30}/>
+        <button className="icon-btn dp36" onClick={close}>
+          <MenuIcon />
         </button>
         <h2>Menu</h2>
       </div>

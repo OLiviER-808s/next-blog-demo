@@ -15,8 +15,8 @@ const ThemeProvider = (props: any) => {
     }
     else if (theme === 'dark') {
       document.documentElement.style.setProperty('--text-color', 'white')
-      document.documentElement.style.setProperty('--primary-bg-color', '#474747')
-      document.documentElement.style.setProperty('--secondary-bg-color', '#2b2b2b')
+      document.documentElement.style.setProperty('--primary-bg-color', '#303030')
+      document.documentElement.style.setProperty('--secondary-bg-color', '#424242')
     }
   }, [theme])
 

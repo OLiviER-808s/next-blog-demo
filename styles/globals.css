@@ -5,6 +5,7 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   background-color: var(--secondary-bg-color);
   color: var(--text-color);
+  transition: 0.3s;
 }
 
 a {
@@ -23,6 +24,20 @@ a {
 .icon-btn {
   background: transparent;
   border: none !important;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon-btn:hover, .icon-btn:focus {
+  background-color: var(--secondary-bg-color);
+}
+
+.dp36 {
+  height: 36px;
+  width: 36px;
+  margin-bottom: 3.5px;
+  padding: 0 0.1em;
 }
 
 .page {
@@ -34,4 +49,8 @@ a {
 .page-content {
   width: 100%;
   max-width: 850px;
+}
+
+svg {
+  fill: var(--text-color);
 }
