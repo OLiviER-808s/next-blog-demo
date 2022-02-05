@@ -12,7 +12,9 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <h1>Next.js Demo</h1>
+        <h1>
+          <Link href="/">Next.js Demo</Link>
+        </h1>
 
         <div className="spacer"></div>
 
@@ -23,7 +25,7 @@ const Header = () => {
         ) : (
           <>
             <Link href="about">About</Link>
-            <Link href="Signup">Signup</Link>
+            <Link href="signup">Signup</Link>
           </>
         ) }
       </div>
