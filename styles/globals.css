@@ -21,6 +21,11 @@ a {
   flex: 1 1 auto;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+}
+
 .icon-btn {
   background: transparent;
   border: none !important;
