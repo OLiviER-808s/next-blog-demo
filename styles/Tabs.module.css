@@ -1,0 +1,32 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.tab_label {
+  padding: 0.5em;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.tab_radio {
+  display: none;
+}
+
+.tab_content {
+  order: 1;
+  width: 100%;
+  display: none;
+}
+
+.tab_radio:checked + .tab_label {
+  font-weight: bold;
+  border-bottom: 2px solid var(--text-color);
+}
+
+.tab_radio:checked + .tab_label + .tab_content {
+  margin-top: 1.5em;
+  display: block;
+}

@@ -14,15 +14,18 @@ const ThemeProvider = (props: any) => {
       document.documentElement.style.setProperty('--secondary-bg-color', 'rgb(202, 202, 202)');
     }
     else if (theme === 'dark') {
-      document.documentElement.style.setProperty('--text-color', 'white')
-      document.documentElement.style.setProperty('--primary-bg-color', '#303030')
-      document.documentElement.style.setProperty('--secondary-bg-color', '#424242')
+      document.documentElement.style.setProperty('--text-color', 'white');
+      document.documentElement.style.setProperty('--primary-bg-color', '#303030');
+      document.documentElement.style.setProperty('--secondary-bg-color', '#424242');
     }
   }, [theme])
 
   return (
     <ThemeUsedContext.Provider value={theme}>
-      <ThemeUpdateContext.Provider value={() => switchTheme(theme === 'light' ? 'dark' : 'light')}>
+      <ThemeUpdateContext.Provider value={() => {
+        localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
+        switchTheme(theme === 'light' ? 'dark' : 'light');
+      }}>
         { props.children }
       </ThemeUpdateContext.Provider>
     </ThemeUsedContext.Provider>
