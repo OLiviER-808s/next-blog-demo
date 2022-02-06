@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import LoginComponent from "../components/LoginComponent";
 import SignupComponent from "../components/SignupComponent";
 import { Tab, TabGroup } from "../components/Tabs";
 import GoogleIcon from '../public/icons/google.svg';
@@ -19,10 +20,10 @@ const Signup: NextPage = () => {
         <Card>
           <TabGroup name="tabs">
             <Tab id='signup' label="Signup">
-              <SignupComponent></SignupComponent>
+              <SignupComponent />
             </Tab>
             <Tab id="login" label="Login">
-              login
+              <LoginComponent />
             </Tab>
           </TabGroup>
         </Card>
