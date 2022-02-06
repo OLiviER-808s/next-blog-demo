@@ -5,6 +5,7 @@ export const TabGroup = (props: any) => {
     <div className={styles.tabs}>
       {props.children.map((tab: any, idx: number) => {
         return (<>
+          <div hidden key={idx}></div>
           <input type="radio" className={styles.tab_radio} name={props.name} id={tab.props.id} defaultChecked={idx === 0} />
           <label htmlFor={tab.props.id} className={styles.tab_label}>{ tab.props.label }</label>
 

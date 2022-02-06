@@ -6,11 +6,25 @@
   cursor: pointer;
   box-shadow: 3px 3px;
   transition: 0.5s;
+  display: flex;
+  align-items: center;
 }
 
 .btn:hover {
   filter: brightness(1.2);
 }
 
+.btn svg {
+  margin-right: 0.5em;
+  margin-bottom: 1px;
+}
+
 .grey { background-color: rgb(150, 150, 150); }
 .blue { background-color: rgb(60, 78, 245); }
+.green { background-color: rgb(46, 212, 46); }
+
+.basic {
+  background-color: var(--btn-color);
+  color: var(--text-color);
+  box-shadow: 3px 3px black;
+}
