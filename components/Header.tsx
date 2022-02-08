@@ -10,7 +10,6 @@ const Header = () => {
   const isHandheld =  useScreenWidth();
   const toggleSidebar = useContext(SidebarUpdateContext);
   const user = useContext(AuthContext);
-  console.log(user);
 
   return (
     <header className={styles.header}>
