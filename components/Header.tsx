@@ -4,10 +4,13 @@ import useScreenWidth from "../lib/screen-width"
 import { useContext } from "react";
 import { SidebarUpdateContext } from "../lib/SidebarProvider";
 import MenuIcon from '../public/icons/menu_closed.svg';
+import { AuthContext } from "../lib/AuthProvider";
 
 const Header = () => {
   const isHandheld =  useScreenWidth();
-  const toggleSidebar = useContext(SidebarUpdateContext)
+  const toggleSidebar = useContext(SidebarUpdateContext);
+  const user = useContext(AuthContext);
+  console.log(user);
 
   return (
     <header className={styles.header}>
@@ -24,8 +27,11 @@ const Header = () => {
           </button>
         ) : (
           <>
-            <Link href="about">About</Link>
-            <Link href="signup">Signup</Link>
+            <Link href="/about">About</Link>
+            {user ? 
+              (<Link href="/account">My Account</Link>) :
+              (<Link href="/signup">Signup</Link>)
+            }
           </>
         ) }
       </div>

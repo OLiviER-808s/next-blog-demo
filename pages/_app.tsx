@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar'
 import SidebarProvider from '../lib/SidebarProvider'
 import Head from 'next/head'
 import ThemeProvider from '../lib/ThemeProvider'
+import AuthProvider from '../lib/AuthProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,18 +16,20 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet" />
       </Head>
 
-      <ThemeProvider>
-        <SidebarProvider>
-          <Header></Header>
-          <Sidebar></Sidebar>
-          
-          <div className='page'>
-            <div className="page-content">
-              <Component {...pageProps} />
+      <AuthProvider>
+        <ThemeProvider>
+          <SidebarProvider>
+            <Header></Header>
+            <Sidebar></Sidebar>
+            
+            <div className='page'>
+              <div className="page-content">
+                <Component {...pageProps} />
+              </div>
             </div>
-          </div>
-        </SidebarProvider>
-      </ThemeProvider>
+          </SidebarProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </>
   )
 }
