@@ -20,9 +20,9 @@ const SetProfile: NextPage = () => {
   const [user] = useAuthState(auth)
   const router = useRouter()
 
-  const create = () => {
+  const create = async () => {
     const ref = doc(db, `users/${user?.uid}`)
-    setDoc(ref, {
+    await setDoc(ref, {
       username: username,
       bio: bio,
       email: user?.email,
