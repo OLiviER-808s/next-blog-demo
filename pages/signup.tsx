@@ -21,8 +21,7 @@ const Signup: NextPage = () => {
     await setDoc(ref, {
       username: user?.displayName,
       email: user?.email,
-      photo: user?.photoURL,
-      bio: ''
+      photo: user?.photoURL
     }, { merge: true });
     router.push('/');
   }

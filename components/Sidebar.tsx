@@ -8,16 +8,19 @@ import Button from './Button'
 import MoonIcon from '../public/icons/moon.svg'
 import SunIcon from '../public/icons/sun.svg'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
+import { useUserData } from '../lib/auth'
 
 const Sidebar = () => {
   const isOpen = useContext(SidebarOpenContext)
   const setSidebar = useContext(SidebarUpdateContext)
 
-  const router = useRouter();
-  router.events?.on('routeChangeComplete', () => setSidebar(false));
+  const router = useRouter()
+  router.events?.on('routeChangeComplete', () => setSidebar(false))
 
   const theme = useContext(ThemeUsedContext)
   const toggleTheme = useContext(ThemeUpdateContext)
+
+  const user = useUserData()
 
   return (
     <div className={styles.sidebar} hidden={!isOpen}>
@@ -35,12 +38,20 @@ const Sidebar = () => {
         <div>
           <Link href="/about">About</Link>
         </div>
-        <div>
-          <Link href="/signup">Signup</Link>
-        </div>
-        <div>
-          <Link href="/signup?tab=1">Login</Link>
-        </div>
+        {!user ? (
+          <>
+            <div>
+              <Link href="/signup">Signup</Link>
+            </div>
+            <div>
+              <Link href="/signup?tab=1">Login</Link>
+            </div>
+          </>
+        ) : (
+          <div>
+            <Link href="#">My Account</Link>
+          </div>
+        )}
 
         <div className="spacer"></div>
 
