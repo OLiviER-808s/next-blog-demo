@@ -8,7 +8,7 @@ import { AuthContext } from "../lib/AuthProvider";
 
 const Header = () => {
   const isHandheld =  useScreenWidth();
-  const toggleSidebar = useContext(SidebarUpdateContext);
+  const setSidebar = useContext(SidebarUpdateContext);
   const user = useContext(AuthContext);
 
   return (
@@ -21,7 +21,7 @@ const Header = () => {
         <div className="spacer"></div>
 
         { isHandheld ? (
-          <button className="icon-btn dp36" onClick={toggleSidebar}>
+          <button className="icon-btn dp36" onClick={() => setSidebar(true)}>
             <MenuIcon />
           </button>
         ) : (
