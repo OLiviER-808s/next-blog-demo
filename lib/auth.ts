@@ -15,7 +15,7 @@ export const useUserData = () => {
     if (user) {
       const ref = doc(db, `users/${user.uid}`);
       unsubscribe = onSnapshot(ref, d => {
-        setUserData({ ...d.data(), id: d.id });
+        setUserData({ ...d.data(), uid: d.id });
       });
     }
     else {

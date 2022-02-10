@@ -1,16 +1,36 @@
+import { doc, setDoc } from "firebase/firestore";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
+import { auth, db } from "../../lib/firebase";
 import { validateUsername } from "../../lib/validators";
 
 const SetProfile: NextPage = () => {
   const [username, setUsername] = useState('')
   const [bio, setBio] = useState('')
+
   const [image, setImage] = useState('/default profile pic.jpg')
+
+  const [user] = useAuthState(auth)
+  const router = useRouter()
+
+  const create = () => {
+    const ref = doc(db, `users/${user?.uid}`)
+    setDoc(ref, {
+      username: username,
+      bio: bio,
+      email: user?.email,
+      photo: image
+    });
+
+    router.push('/');
+  }
 
   return (
     <div className="center">
@@ -30,7 +50,7 @@ const SetProfile: NextPage = () => {
           <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
           <div className="btn-row">
-            <Button color="green">Create Profile</Button>
+            <Button color="green" onClick={create}>Create Profile</Button>
             <Button secondary>Skip for Now</Button>
           </div>
         </Card>

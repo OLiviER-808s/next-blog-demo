@@ -17,7 +17,7 @@ const SignupComponent = () => {
     if (validateEmail(email) && validatePassword(password) && validatePasswordConfirm(password, passwordConfirm)) {
       await createUserWithEmailAndPassword(auth, email, password);
 
-      router.push('/profile/edit');
+      router.push('/profile/set');
     }
   }
 
