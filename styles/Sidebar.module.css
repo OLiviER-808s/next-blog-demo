@@ -5,19 +5,24 @@
   background-color: var(--primary-bg-color);
   left: 100%;
   transform: translateX(-200px);
-  transition: 0.5s;
   padding: 1.4em 1em;
   box-shadow: 5px;
 }
 
-.sidebar div {
+.list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.list div {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1.5em;
 }
 
-.sidebar h2 {
+.list h2 {
   margin: 0;
   margin-left: 0.5em;
 }
