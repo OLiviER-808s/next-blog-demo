@@ -28,3 +28,18 @@
   color: var(--text-color);
   box-shadow: 3px 3px black;
 }
+
+.secondary {
+  color: var(--text-color);
+  background-color: var(--secondary-bg-color);
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.secondary:hover {
+  border: 1px solid black;
+  box-shadow: 3px 3px black;
+  filter: brightness(1.2);
+  outline: none;
+}

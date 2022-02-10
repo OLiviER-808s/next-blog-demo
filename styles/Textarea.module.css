@@ -1,0 +1,21 @@
+.text_field {
+  margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.textarea {
+  width: 99%;
+  font-size: 0.9rem;
+  padding: 0.5em;
+  border-radius: 6px;
+  border: 2px solid black;
+  color: var(--text-color);
+  box-shadow: 3px 3px black;
+  background-color: var(--primary-bg-color);
+}
+
+.textarea:focus {
+  outline: none;
+  background-color: var(--secondary-bg-color);
+}

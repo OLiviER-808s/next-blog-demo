@@ -38,6 +38,14 @@ a {
   background-color: var(--secondary-bg-color);
 }
 
+.btn-row {
+  display: flex;
+}
+
+.btn-row button {
+  margin-right: 1em;
+}
+
 .dp36 {
   height: 36px;
   width: 36px;
