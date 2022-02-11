@@ -19,7 +19,7 @@ export async function getStaticPaths() {
   const docs = await getDocs(ref)
   
   const paths = docs.docs.map(doc => {
-    return { params: { uid: doc.id } }
+    return { params: { username: doc.get('username') } }
   })
 
   return {
