@@ -67,3 +67,8 @@ a {
 svg {
   fill: var(--text-color);
 }
+
+.error {
+  color: rgb(235, 23, 23);
+  max-width: 250px;
+}

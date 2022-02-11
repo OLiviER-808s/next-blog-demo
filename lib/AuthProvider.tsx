@@ -1,7 +1,8 @@
 import { createContext } from "react"
 import { useUserData } from "./auth";
 
-export const AuthContext = createContext({});
+const def: any = {}
+export const AuthContext = createContext(def);
 
 const AuthProvider = (props: any) => {
   const user = useUserData();

@@ -1,4 +1,5 @@
-import { doc, onSnapshot } from 'firebase/firestore';
+import { async } from '@firebase/util';
+import { collection, doc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from './firebase';
@@ -26,4 +27,22 @@ export const useUserData = () => {
   }, [user]);
 
   return userData
+}
+
+export const useUsernameCheck = async (username: string) => {
+  const ref = collection(db, 'users')
+  const q = query(ref, where('username', '==', username))
+
+  const docs = await getDocs(q)
+  
+  return docs.size < 1
+}
+
+export const useEmailCheck = async (email: string) => {
+  const ref = collection(db, 'users')
+  const q = query(ref, where('email', '==', email))
+
+  const docs = await getDocs(q)
+
+  return docs.size < 1
 }

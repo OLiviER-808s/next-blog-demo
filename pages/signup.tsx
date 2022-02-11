@@ -36,16 +36,19 @@ const Signup: NextPage = () => {
           </Button>
         </div>
 
-        <Card>
-          <TabGroup name="tabs">
-            <Tab id='signup' label="Signup">
-              <SignupComponent />
-            </Tab>
-            <Tab id="login" label="Login">
-              <LoginComponent />
-            </Tab>
-          </TabGroup>
-        </Card>
+
+        <div style={{'width': '100%', 'maxWidth': '430px'}}>
+          <Card>
+            <TabGroup name="tabs">
+              <Tab id='signup' label="Signup">
+                <SignupComponent />
+              </Tab>
+              <Tab id="login" label="Login">
+                <LoginComponent />
+              </Tab>
+            </TabGroup>
+          </Card>
+        </div>
       </div>
     </div>
   )

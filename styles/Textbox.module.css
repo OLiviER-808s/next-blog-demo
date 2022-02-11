@@ -31,3 +31,8 @@
   fill: rgb(46, 212, 46);
   border-color: rgb(46, 212, 46);
 }
+
+.err {
+  fill: rgb(235, 23, 23);
+  border-color: rgb(235, 23, 23);
+}

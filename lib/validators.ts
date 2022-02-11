@@ -13,5 +13,5 @@ export const validateEmail = (email: string) => {
 
 export const validateUsername = (username: string) => {
   const length = username.length;
-  return length > 0 && length < 30;
+  return length > 0 && length < 30 && username !== 'set' && username !== 'edit';
 }
