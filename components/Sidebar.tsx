@@ -8,7 +8,7 @@ import Button from './Button'
 import MoonIcon from '../public/icons/moon.svg'
 import SunIcon from '../public/icons/sun.svg'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
-import { useUserData } from '../lib/auth'
+import { AuthContext } from '../lib/AuthProvider'
 
 const Sidebar = () => {
   const isOpen = useContext(SidebarOpenContext)
@@ -20,7 +20,7 @@ const Sidebar = () => {
   const theme = useContext(ThemeUsedContext)
   const toggleTheme = useContext(ThemeUpdateContext)
 
-  const user = useUserData()
+  const user = useContext(AuthContext)
 
   return (
     <div className={styles.sidebar} hidden={!isOpen}>
@@ -49,7 +49,7 @@ const Sidebar = () => {
           </>
         ) : (
           <div>
-            <Link href="#">My Account</Link>
+            <Link href={`/profile/${user.username}`}>My Account</Link>
           </div>
         )}
 

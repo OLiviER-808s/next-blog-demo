@@ -28,7 +28,7 @@ const Header = () => {
           <>
             <Link href="/about">About</Link>
             {user ? 
-              (<Link href={`/profile/${user.uid}`}>My Account</Link>) :
+              (<Link href={`/profile/${user.username}`}>My Account</Link>) :
               (<Link href="/signup">Signup</Link>)
             }
           </>
