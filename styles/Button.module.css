@@ -17,6 +17,7 @@
 .btn svg {
   margin-right: 0.5em;
   margin-bottom: 1px;
+  fill: initial;
 }
 
 .grey { background-color: rgb(150, 150, 150); }

@@ -11,6 +11,8 @@ import { useContext } from 'react'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
 import { AuthContext } from '../lib/AuthProvider'
 import useScreenWidth from '../lib/screen-width'
+import Button from './Button'
+import AddIcon from '../public/icons/add.svg'
 
 const Toolbar = () => {
   const theme = useContext(ThemeUsedContext)
@@ -30,12 +32,21 @@ const Toolbar = () => {
 
       <div className="spacer"></div>
 
+      {user && !isHandheld && (<>
+        <Button color="green">
+          <AddIcon />
+          Create Post
+        </Button>
+        <div className="spacer"></div>
+      </>)}
+
       <button className="icon-btn">
         <DownIcon />
       </button>
       <button className="icon-btn">
         <UpIcon />
       </button>
+
       {!isHandheld && (<>
         <button className='icon-btn' onClick={switchThme}>
           {theme === 'light' ? <MoonIcon /> : <SunIcon />}
