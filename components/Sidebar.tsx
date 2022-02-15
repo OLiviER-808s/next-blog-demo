@@ -5,8 +5,8 @@ import styles from '../styles/Sidebar.module.css'
 import MenuIcon from '../public/icons/menu_open.svg'
 import { useRouter } from 'next/router'
 import Button from './Button'
-import MoonIcon from '../public/icons/moon.svg'
-import SunIcon from '../public/icons/sun.svg'
+import MoonIcon from '../public/icons/moon18.svg'
+import SunIcon from '../public/icons/sun18.svg'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
 import { AuthContext } from '../lib/AuthProvider'
 
@@ -48,9 +48,14 @@ const Sidebar = () => {
             </div>
           </>
         ) : (
-          <div>
-            <Link href={`/profile/${user.username}`}>My Account</Link>
-          </div>
+          <>
+            <div>
+              <Link href={`/profile/${user.username}`}>My Account</Link>
+            </div>
+            <div>
+              <Link href="#">Logout</Link>
+            </div>
+          </>
         )}
 
         <div className="spacer"></div>

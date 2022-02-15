@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
-import { useContext } from 'react'
-import { ThemeUpdateContext } from '../lib/ThemeProvider'
+import Toolbar from '../components/Toolbar'
 
 const Home: NextPage = () => {
-  const switchTheme = useContext(ThemeUpdateContext)
-
   return (
-    <button onClick={switchTheme}>switch theme</button>
+    <>
+      <Toolbar></Toolbar>
+    </>
   )
 }
 
