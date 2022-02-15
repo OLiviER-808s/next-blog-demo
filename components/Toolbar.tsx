@@ -13,13 +13,18 @@ import { AuthContext } from '../lib/AuthProvider'
 import useScreenWidth from '../lib/screen-width'
 import Button from './Button'
 import AddIcon from '../public/icons/add.svg'
+import { useLogout } from '../lib/auth'
+import { useRouter } from 'next/router'
 
 const Toolbar = () => {
   const theme = useContext(ThemeUsedContext)
   const user = useContext(AuthContext)
   const isHandheld = useScreenWidth()
+  const router = useRouter()
 
   const switchThme = useContext(ThemeUpdateContext)
+  const logout = useLogout()
+  const login = () => router.push('/signup?tab=1')
 
   return (
     <div className={styles.bar}>
@@ -52,11 +57,11 @@ const Toolbar = () => {
           {theme === 'light' ? <MoonIcon /> : <SunIcon />}
         </button>
         {user ? (
-          <button className="icon-btn">
+          <button className="icon-btn" onClick={logout}>
             <LogoutIcon />
           </button>
         ) : (
-          <button className="icon-btn">
+          <button className="icon-btn" onClick={login}>
             <LoginIcon />
           </button>
         )}

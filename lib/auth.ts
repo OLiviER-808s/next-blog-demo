@@ -1,4 +1,5 @@
 import { async } from '@firebase/util';
+import { signOut } from 'firebase/auth';
 import { collection, doc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -45,4 +46,10 @@ export const useEmailCheck = async (email: string) => {
   const docs = await getDocs(q)
 
   return docs.size < 1
+}
+
+export const useLogout = () => {
+  return async () => {
+    signOut(auth)
+  }
 }

@@ -2,7 +2,6 @@ import { signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import LoginComponent from "../components/LoginComponent";
@@ -13,15 +12,16 @@ import GoogleIcon from '../public/icons/google.svg';
 
 const Signup: NextPage = () => {
   const router = useRouter()
-  const [user] = useAuthState(auth)
 
   const loginWithGoogle = async () => {
-    await signInWithPopup(auth, googleProvider);
-    const ref = doc(db, `users/${user?.uid}`);
+    const credential = await signInWithPopup(auth, googleProvider);
+    const u = credential.user
+
+    const ref = doc(db, `users/${u.uid}`);
     await setDoc(ref, {
-      username: user?.displayName,
-      email: user?.email,
-      photo: user?.photoURL
+      username: u.displayName,
+      email: u.email,
+      photo: u.photoURL
     }, { merge: true });
     router.push('/');
   }
