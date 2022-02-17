@@ -25,6 +25,7 @@ const Toolbar = () => {
   const switchThme = useContext(ThemeUpdateContext)
   const logout = useLogout()
   const login = () => router.push('/signup?tab=1')
+  const createPost = () => router.push('/post/create')
 
   return (
     <div className={styles.bar}>
@@ -38,7 +39,7 @@ const Toolbar = () => {
       <div className="spacer"></div>
 
       {user && !isHandheld && (<>
-        <Button color="green">
+        <Button color="green" onClick={createPost}>
           <AddIcon />
           Create Post
         </Button>
