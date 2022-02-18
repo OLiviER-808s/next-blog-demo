@@ -21,6 +21,8 @@ const Editor = () => {
   const isHandheld: boolean = useScreenWidth() < 600
 
   const insertImage = (event: any) => {
+    if (event.target.files.length < 1) return
+
     const file: File = event.target.files[0]
 
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
@@ -43,6 +45,10 @@ const Editor = () => {
 
         if (command === 'insertImage') {
           imageUpload.current.click()
+        }
+        else if (command === 'createLink') {
+          const link: any = prompt('Enter link here: ', '')
+          document.execCommand(command, false, link)
         }
         else {
           document.execCommand(command, false)
@@ -95,7 +101,7 @@ const Editor = () => {
         <button type="button" data-element="insertImage" className={styles[useCommandListener('insertImage')]}>
           <ImageIcon />
         </button>
-        <button type="button" data-elment="createLink" className={styles[useCommandListener('createLink')]}>
+        <button type="button" data-element="createLink" className={styles[useCommandListener('createLink')]}>
           <LinkIcon />
         </button>
       </div>

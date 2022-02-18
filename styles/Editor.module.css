@@ -34,3 +34,8 @@
 .content img {
   width: 100%;
 }
+
+.content a {
+  text-decoration: underline;
+  color: rgb(60, 78, 245);
+}
