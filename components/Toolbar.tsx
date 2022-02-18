@@ -19,7 +19,7 @@ import { useRouter } from 'next/router'
 const Toolbar = () => {
   const theme = useContext(ThemeUsedContext)
   const user = useContext(AuthContext)
-  const isHandheld = useScreenWidth()
+  const isHandheld = useScreenWidth() < 600
   const router = useRouter()
 
   const switchThme = useContext(ThemeUpdateContext)

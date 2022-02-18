@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react"
 
 const useScreenWidth = () => {
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(0)
 
   useEffect(() => {
-    setWidth(screen.width);
-
     window.addEventListener('resize', () => {
-      setWidth(screen.width);
-    });
-  }, []);
+      console.log('asasas')
+      setWidth(window.innerWidth)
+    })
 
-  return width < 600;
+    setWidth(window.innerWidth)
+
+    return () => window.removeEventListener('resize', () => setWidth(window.innerWidth))
+  }, [])
+
+  return width
 }
 
 export default useScreenWidth

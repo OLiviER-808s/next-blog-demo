@@ -7,7 +7,7 @@ import MenuIcon from '../public/icons/menu_closed.svg';
 import { AuthContext } from "../lib/AuthProvider";
 
 const Header = () => {
-  const isHandheld =  useScreenWidth();
+  const isHandheld = useScreenWidth() < 600;
   const setSidebar = useContext(SidebarUpdateContext);
   const user = useContext(AuthContext);
 
