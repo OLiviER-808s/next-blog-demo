@@ -5,7 +5,6 @@ const useScreenWidth = () => {
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      console.log('asasas')
       setWidth(window.innerWidth)
     })
 

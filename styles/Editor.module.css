@@ -16,13 +16,17 @@
   background-color: var(--secondary-bg-color) !important;
 }
 
+.spacer {
+  margin: 0 0.5em;
+}
+
 .content {
   background-color: var(--secondary-bg-color);
   border: 1px solid black;
   box-shadow: 3px 3px black;
   border-radius: 6px;
-  font-size: 1rem;
-  min-height: 12em;
+  font-size: 1.1rem;
+  min-height: 15em;
   outline: none;
-  padding: 0.3em;
+  padding: 0.5em;
 }
