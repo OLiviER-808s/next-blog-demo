@@ -9,7 +9,9 @@ const Textbox = (props: any) => {
       type={props.type} 
       className={`${styles.text_box} 
       ${props.icon && !props.error && props.validator() ? styles.validated : ''} 
-      ${props.error && props.icon ? styles.err : ''}`}
+      ${props.error && props.icon ? styles.err : ''}  
+      ${props.fullWidth ? styles.fullWidth : ''} 
+      ${props.big ? styles.big : ''}`}
       value={props.value}
       onChange={e => props.onChange(e.target.value)}
       placeholder={props.placeholder} />

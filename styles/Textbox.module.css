@@ -36,3 +36,12 @@
   fill: rgb(235, 23, 23);
   border-color: rgb(235, 23, 23);
 }
+
+.fullWidth {
+  width: 100%;
+}
+
+.big {
+  font-size: 1.25rem;
+  background-color: var(--secondary-bg-color);
+}
