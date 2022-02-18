@@ -16,7 +16,22 @@ import useScreenWidth from '../lib/screen-width'
 const Editor = () => {
   const header: any = useRef(null)
   const content: any = useRef(null)
+  const imageUpload: any = useRef(null)
+
   const isHandheld: boolean = useScreenWidth() < 600
+
+  const insertImage = (event: any) => {
+    const file: File = event.target.files[0]
+
+    if (file.type === 'image/jpeg' || file.type === 'image/png') {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (_event) => {
+        const photo: any = reader.result;
+        document.execCommand('insertImage', false, photo)
+      }
+    }
+  }
 
   useEffect(() => {
     const btns = header.current.querySelectorAll('button')
@@ -26,7 +41,12 @@ const Editor = () => {
       btns[i].addEventListener('click', () => {
         const command = btns[i].dataset['element']
 
-        document.execCommand(command, false)
+        if (command === 'insertImage') {
+          imageUpload.current.click()
+        }
+        else {
+          document.execCommand(command, false)
+        }
         content.current.focus()
       })
     }
@@ -36,6 +56,8 @@ const Editor = () => {
 
   return (
     <>
+      <input type="file" hidden ref={imageUpload} onChange={insertImage}/>
+
       <div ref={header} className={styles.header}>
         <button type="button" data-element="bold" className={styles[useCommandListener('bold')]}>
           <BoldIcon />
