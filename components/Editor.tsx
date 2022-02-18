@@ -61,7 +61,7 @@ const Editor = () => {
   }, [])
 
   return (
-    <>
+    <div style={{'marginBottom': '1em'}}>
       <input type="file" hidden ref={imageUpload} onChange={insertImage}/>
 
       <div ref={header} className={styles.header}>
@@ -107,7 +107,7 @@ const Editor = () => {
       </div>
       
       <div ref={content} className={styles.content} contentEditable></div>
-    </>
+    </div>
   )
 }
 

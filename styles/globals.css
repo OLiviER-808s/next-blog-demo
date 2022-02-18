@@ -48,6 +48,14 @@ a {
   margin-right: 1em;
 }
 
+.reverse-btn-row {
+  display: flex;
+}
+
+.reverse-btn-row button {
+  margin-left: 1em;
+}
+
 .dp36 {
   height: 36px;
   width: 36px;

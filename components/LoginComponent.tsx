@@ -23,7 +23,10 @@ const LoginComponent = () => {
         <Textbox placeholder="Password" type="password" icon value={password} onChange={setPassword} 
         validator={() => validatePassword(password)}/>
 
-        <Button color="blue" onClick={login}>Login</Button>
+        <div className="btn-row">
+          <Button color="blue" onClick={login}>Login</Button>
+          <Button secondary>Forgot Passowrd?</Button>
+        </div>
       </form>
     </div>
   )
