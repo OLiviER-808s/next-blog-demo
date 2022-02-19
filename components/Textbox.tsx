@@ -1,6 +1,7 @@
 import styles from '../styles/TextBox.module.css'
 import TickIcon from '../public/icons/tick.svg'
 import CrossIcon from '../public/icons/cross.svg'
+import { useEffect, useState } from 'react'
 
 interface TextboxProps {
   type?: string,
@@ -10,19 +11,12 @@ interface TextboxProps {
   big?: boolean,
   onChange?: Function,
   value?: string,
-  validator?: Function,
   placeholder?: string,
-  returnValidatorResult?: boolean
+  validationState?: string
 }
 
 const Textbox = (props: TextboxProps) => {
-  const valid = props.validator ? props.validator() : null
-
-  const updateValue = (e: any) => {
-    if (props.onChange) {
-      props.onChange(props.returnValidatorResult ? {value: e.target.value, valid: valid === 'valid'} : e.target.value)
-    }
-  }
+  const state = props.validationState
 
   return (
     <div className={styles.text_field}>
@@ -30,21 +24,21 @@ const Textbox = (props: TextboxProps) => {
         <input 
         type={props.type} 
         className={`${styles.text_box} 
-        ${valid === 'valid' ? styles.validated : ''} 
-        ${valid === 'error' ? styles.err : ''}  
+        ${state === 'valid' ? styles.validated : ''} 
+        ${state === 'error' ? styles.err : ''}  
         ${props.fullWidth ? styles.fullWidth : ''} 
         ${props.big ? styles.big : ''}`}
         value={props.value}
-        onChange={updateValue}
+        onChange={(e) => props.onChange ? props.onChange(e.target.value) : null}
         placeholder={props.placeholder} />
 
         {props.icon && (
-          valid === 'error' ? <CrossIcon className={`${styles.icon} ${styles.err}`} /> :
-          <TickIcon className={`${styles.icon} ${valid === 'valid' ? styles.validated : ''}`} />
+          state === 'error' ? <CrossIcon className={`${styles.icon} ${styles.err}`} /> :
+          <TickIcon className={`${styles.icon} ${state === 'valid' ? styles.validated : ''}`} />
         )}
       </div>
 
-      <p className='error'>{props.error_msg && valid === 'error' ? props.error_msg : ''}</p>
+      <p className='error'>{props.error_msg && state === 'error' ? props.error_msg : ''}</p>
     </div>
   )
 }

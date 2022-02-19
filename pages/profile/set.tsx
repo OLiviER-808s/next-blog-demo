@@ -1,7 +1,8 @@
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import debounce from "lodash.debounce";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
@@ -9,19 +10,40 @@ import Card from "../../components/Card";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
 import { auth, db } from "../../lib/firebase";
-import { validateUsername } from "../../lib/validators";
 
 const SetProfile: NextPage = () => {
-  const [username, setUsername] = useState({value: '', valid: false})
+  const [username, setUsername] = useState('')
   const [bio, setBio] = useState('')
   const [image, setImage] = useState('/default profile pic.jpg')
 
   const [user] = useAuthState(auth)
   const router = useRouter()
 
-  const create = async () => {
-    if (!username.valid) return
+  const [usernameState, setUsernameState] = useState('neutral')
 
+  useEffect(() => {
+    checkUsername(username)
+  }, [username])
+
+  const checkUsername = useCallback(
+    debounce(async (username: string) => {
+      const length = username.length
+
+      if (length < 3 || length > 25 || username === 'set' || username === 'edit') {
+        setUsernameState('neutral')
+      }
+      else {
+        const ref = collection(db, 'users')
+        const q = query(ref, where('username', '==', username))
+        const snap = await getDocs(q)
+        const exists = snap.size > 0
+        setUsernameState(exists ? 'error' : 'valid')
+      }
+    }, 500),
+    []
+  )
+
+  const create = async () => {
     const ref = doc(db, `users/${user?.uid}`)
     await setDoc(ref, {
       username: username,
@@ -45,8 +67,8 @@ const SetProfile: NextPage = () => {
             <Button color="blue">Change Profile Pic</Button>
           </div>
 
-          <Textbox type="text" placeholder="Username" value={username.value} onChange={setUsername} 
-          icon validator={() => validateUsername(username.value)} returnValidatorResult />
+          <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
+          icon validationState={usernameState} error_msg="Username is already taken"/>
 
           <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
