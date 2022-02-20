@@ -29,26 +29,17 @@ export const useUserData = () => {
   return userData
 }
 
-export const useUsernameCheck = async (username: string) => {
-  const ref = collection(db, 'users')
-  const q = query(ref, where('username', '==', username))
-
-  const docs = await getDocs(q)
-  
-  return docs.size < 1
-}
-
-export const useEmailCheck = async (email: string) => {
-  const ref = collection(db, 'users')
-  const q = query(ref, where('email', '==', email))
-
-  const docs = await getDocs(q)
-
-  return docs.size < 1
-}
-
 export const useLogout = () => {
   return async () => {
     signOut(auth)
   }
 }
+
+export const getUserWithUsername = async (username: string) => {
+  const ref = collection(db, 'users')
+  const q = query(ref, where('username', '==', username))
+  const snap = await getDocs(q)
+  const doc = snap.docs[0]
+
+  return { ...doc.data(), uid: doc.id }
+} 

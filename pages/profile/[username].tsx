@@ -1,30 +1,28 @@
-import { collection, getDocs } from "firebase/firestore";
 import { NextPage } from "next";
-import { db } from "../../lib/firebase";
+import Avatar from "../../components/Avatar";
+import { getUserWithUsername } from "../../lib/auth";
 
-const ProfilePage: NextPage = () => {
+const ProfilePage: NextPage = ({ user, posts }: any) => {
   return (
-    <div>hi</div>
+    <div className="center">
+      <div style={{'textAlign': 'center'}}>
+        <Avatar src={user.photo} width={5.5} />
+        <h2>{user.username}</h2>
+        <p>{user.bio}</p>
+      </div>
+    </div>
   )
 }
 
-export async function getStaticProps() {
-  return {
-    props: { posts: [] }
-  }
-}
-
-export async function getStaticPaths() {
-  const ref = collection(db, 'users')
-  const docs = await getDocs(ref)
-  
-  const paths = docs.docs.map(doc => {
-    return { params: { username: doc.get('username') } }
-  })
+export async function getServerSideProps({ query }: any) {
+  const { username } = query
+  const user = await getUserWithUsername(username)
 
   return {
-    paths,
-    fallback: false
+    props: {
+      user: user,
+      posts: []
+    }
   }
 }
 
