@@ -14,8 +14,8 @@ import { useCommandListener } from '../lib/commandListener'
 import useScreenWidth from '../lib/screen-width'
 
 const Editor = () => {
-  const header: any = useRef(null)
-  const content: any = useRef(null)
+  const headerRef: any = useRef(null)
+  const contentRef: any = useRef(null)
   const imageUpload: any = useRef(null)
 
   const isHandheld: boolean = useScreenWidth() < 600
@@ -36,8 +36,8 @@ const Editor = () => {
   }
 
   useEffect(() => {
-    const btns = header.current.querySelectorAll('button')
-    content.current.focus()
+    const btns = headerRef.current.querySelectorAll('button')
+    contentRef.current.focus()
 
     for (let i = 0; i < btns.length; i++) {
       btns[i].addEventListener('click', () => {
@@ -53,7 +53,7 @@ const Editor = () => {
         else {
           document.execCommand(command, false)
         }
-        content.current.focus()
+        contentRef.current.focus()
       })
     }
 
@@ -64,7 +64,7 @@ const Editor = () => {
     <div style={{'marginBottom': '1em'}}>
       <input type="file" hidden ref={imageUpload} onChange={insertImage}/>
 
-      <div ref={header} className={styles.header}>
+      <div ref={headerRef} className={styles.header}>
         <button type="button" data-element="bold" className={styles[useCommandListener('bold')]}>
           <BoldIcon />
         </button>
@@ -106,7 +106,7 @@ const Editor = () => {
         </button>
       </div>
       
-      <div ref={content} className={styles.content} contentEditable></div>
+      <div id='content' ref={contentRef} className={styles.content} contentEditable></div>
     </div>
   )
 }
