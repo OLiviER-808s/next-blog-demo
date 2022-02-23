@@ -9,12 +9,14 @@ const Post = ({ post }: any) => {
   return (
     <div className={styles.post}>
       <Card>
-        <h3 className={styles.title}>
+        <p>by <Link href={`/profile/${post.authorname}`}>{ post.authorname }</Link></p>
+
+        <h2 className={styles.title}>
           <Link href={`/post/${post.id}`}>{ post.title }</Link>
-        </h3>
+        </h2>
 
         <div className={styles.footer}>
-          <p>by <Link href={`/profile/${post.authorname}`}>{ post.authorname }</Link></p>
+          <p>x words. x min read</p>
 
           <div className="spacer"></div>
 

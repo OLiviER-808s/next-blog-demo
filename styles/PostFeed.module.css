@@ -11,11 +11,14 @@
   width: 100%;
   max-width: 700px;
 }
+.post p {
+  margin: 0;
+  margin-bottom: 0.3em;
+}
 
 .title {
   margin: 0;
   margin-bottom: 0.4em;
-  font-size: 1.3rem;
 }
 
 .footer {
