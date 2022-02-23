@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
@@ -22,6 +22,7 @@ export const storage = getStorage();
 export const googleProvider = new GoogleAuthProvider()
 
 export const timestamp = () => serverTimestamp()
+export const fromMillis = (millis: number) => Timestamp.fromMillis(millis) 
 
 export const postToJSON = (data: any) => {
   return { ...data, createdAt: data.createdAt.toMillis() }
