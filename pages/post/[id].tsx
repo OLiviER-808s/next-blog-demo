@@ -21,12 +21,15 @@ const PostPage: NextPage = ({ post }: any) => {
         <button className="icon-btn">
           <LikeIcon />
         </button>
+        <p>{ post.likeCount }</p>
         <button className="icon-btn">
           <DislikeIcon />
         </button>
+        <p>{ post.dislikeCount }</p>
         <button className="icon-btn">
           <CommentIcon />
         </button>
+        <p>0</p>
       </div>
       <div className={styles.article}>
         <div className={styles.header}>

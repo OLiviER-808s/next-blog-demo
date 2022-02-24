@@ -3,9 +3,13 @@
   flex-direction: column;
   width: 50px;
   position: sticky;
+  text-align: center;
 }
 .btn_column button {
   margin-bottom: 0.5em;
+}
+.btn_column p {
+  margin: 0;
 }
 
 .page {
@@ -13,12 +17,12 @@
 }
 
 .article {
-  margin-left: 1em;
+  margin-left: 1.5em;
 }
 
 .header {
   margin-top: 0.2em;
-  margin-bottom: 1.5em;
+  margin-bottom: 2em;
 }
 .header h1 {
   margin-bottom: 0.2em;
@@ -30,4 +34,9 @@
 
 .content {
   font-size: 1.1rem;
+  width: 100%;
+}
+
+.content img {
+  width: 90%;
 }
