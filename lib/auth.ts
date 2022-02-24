@@ -1,5 +1,5 @@
 import { signOut } from 'firebase/auth';
-import { collection, doc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from './firebase';
@@ -46,7 +46,7 @@ export const getUserWithUsername = async (username: string) => {
 
 export const getUserPosts = async (username: string) => {
   const ref = collection(db, 'posts')
-  const q = query(ref, where('authorname', '==', username), where('state', '==', 'posted'))
+  const q = query(ref, where('authorname', '==', username), where('state', '==', 'posted'), orderBy('createdAt', 'desc'))
   const snap = await getDocs(q)
   const posts = snap.docs.map(post => {
     return { ...post.data(), id: post.id }

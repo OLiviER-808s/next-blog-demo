@@ -27,6 +27,7 @@ const AddComment = (props: any) => {
       const data: Comment = {
         content: comment,
         authorname: user.username,
+        photo: user.photo,
         postID: id,
         createdAt: timestamp()
       }

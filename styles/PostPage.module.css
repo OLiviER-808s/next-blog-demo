@@ -1,14 +1,17 @@
 .btn_column {
+  min-width: 50px;
+}
+
+.btns {
+  position: fixed;
   display: flex;
   flex-direction: column;
-  width: 50px;
-  position: sticky;
   text-align: center;
 }
-.btn_column button {
+.btns button {
   margin-bottom: 0.5em;
 }
-.btn_column p {
+.btns p {
   margin: 0;
 }
 
@@ -18,6 +21,22 @@
 
 .article {
   margin-left: 1.5em;
+}
+@media only screen and (max-width: 600px) {
+  .article {
+    margin: 0;
+  }
+}
+
+.btn_row {
+  display: flex;
+}
+.btn_row div {
+  margin-right: 0.5em;
+  text-align: center;
+}
+.btn_row p {
+  margin: 0;
 }
 
 .header {
@@ -35,7 +54,6 @@
 .content {
   font-size: 1.1rem;
   width: 100%;
-  margin-bottom: 2em;
 }
 
 .content img {
