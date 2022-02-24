@@ -2,7 +2,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import debounce from "lodash.debounce"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
-import { useEmailCheck } from "../lib/auth"
 import { auth, db } from "../lib/firebase"
 import { validatePassword, validatePasswordConfirm } from "../lib/validators"
 import Button from "./Button"
@@ -41,13 +40,13 @@ const SignupComponent = () => {
   )
 
   const signup = async () => {
-    if (validatePassword(password) && validatePasswordConfirm(password, passwordConfirm)) {
-      const EmailAccepted = await useEmailCheck(email)
+    const valid = validatePassword(password) === 'valid'
+      && validatePasswordConfirm(password, passwordConfirm) === 'valid'
+      && emailState === 'valid'
 
-      if (EmailAccepted) {
-        await createUserWithEmailAndPassword(auth, email, password)
-        router.push('/profile/set')
-      }
+    if (valid) {
+      await createUserWithEmailAndPassword(auth, email, password)
+      router.push('/profile/set')
     }
   }
 

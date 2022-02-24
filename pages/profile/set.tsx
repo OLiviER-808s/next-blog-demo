@@ -44,15 +44,17 @@ const SetProfile: NextPage = () => {
   )
 
   const create = async () => {
-    const ref = doc(db, `users/${user?.uid}`)
-    await setDoc(ref, {
-      username: username,
-      bio: bio,
-      email: user?.email,
-      photo: image
-    })
+    if (usernameState === 'valid') {
+      const ref = doc(db, `users/${user?.uid}`)
+      await setDoc(ref, {
+        username: username,
+        bio: bio,
+        email: user?.email,
+        photo: image
+      })
 
-    router.push('/')
+      router.push('/')
+    }
   }
 
   return (
