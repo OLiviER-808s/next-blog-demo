@@ -6,6 +6,9 @@ import LikeIcon from '../public/icons/like18.svg'
 import DislikeIcon from '../public/icons/dislike18.svg'
 
 const Post = ({ post }: any) => {
+  const words = post.content.split(' ').length
+  const mins = (words / 100 + 1).toFixed(0);
+
   return (
     <div className={styles.post}>
       <Card>
@@ -16,7 +19,7 @@ const Post = ({ post }: any) => {
         </h2>
 
         <div className={styles.footer}>
-          <p>x words. x min read</p>
+          <p>{words} words. {mins} min read</p>
 
           <div className="spacer"></div>
 

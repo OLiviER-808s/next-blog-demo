@@ -1,0 +1,33 @@
+.btn_column {
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  position: sticky;
+}
+.btn_column button {
+  margin-bottom: 0.5em;
+}
+
+.page {
+  display: flex;
+}
+
+.article {
+  margin-left: 1em;
+}
+
+.header {
+  margin-top: 0.2em;
+  margin-bottom: 1.5em;
+}
+.header h1 {
+  margin-bottom: 0.2em;
+  margin-top: 0;
+}
+.header p {
+  margin: 0;
+}
+
+.content {
+  font-size: 1.1rem;
+}
