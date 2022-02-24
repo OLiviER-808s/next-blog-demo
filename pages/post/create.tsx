@@ -38,7 +38,6 @@ const CreatePage: NextPage = () => {
         title: title,
         state: state,
         authorname: user.username,
-        photo: user.photo,
         createdAt: timestamp()
       }
 

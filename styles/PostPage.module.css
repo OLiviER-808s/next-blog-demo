@@ -35,8 +35,9 @@
 .content {
   font-size: 1.1rem;
   width: 100%;
+  margin-bottom: 2em;
 }
 
 .content img {
-  width: 90%;
+  max-width: 90%;
 }

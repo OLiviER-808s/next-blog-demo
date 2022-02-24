@@ -5,11 +5,14 @@ import LikeIcon from '../../public/icons/like36.svg'
 import DislikeIcon from '../../public/icons/dislike36.svg'
 import CommentIcon from '../../public/icons/comment.svg'
 import styles from '../../styles/postPage.module.css'
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import AddComment from "../../components/AddComment";
 
 const PostPage: NextPage = ({ post }: any) => {
   const contentRef: any = useRef(null)
+
+  const [commentBox, setCommentBox] = useState(false)
 
   useEffect(() => {
     contentRef.current.innerHTML = post.content
@@ -26,11 +29,12 @@ const PostPage: NextPage = ({ post }: any) => {
           <DislikeIcon />
         </button>
         <p>{ post.dislikeCount }</p>
-        <button className="icon-btn">
+        <button className="icon-btn" onClick={() => setCommentBox(true)}>
           <CommentIcon />
         </button>
         <p>0</p>
       </div>
+
       <div className={styles.article}>
         <div className={styles.header}>
           <h1>{ post.title }</h1>
@@ -38,6 +42,11 @@ const PostPage: NextPage = ({ post }: any) => {
         </div>
 
         <div ref={contentRef} className={styles.content}></div>
+
+        <h3>Comments:</h3>
+        
+
+        <AddComment show={commentBox} close={() => setCommentBox(false)}/>
       </div>
     </div>
   )
