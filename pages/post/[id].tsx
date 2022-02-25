@@ -104,7 +104,7 @@ const PostPage: NextPage = (props: any) => {
 
   return (
     <div className={styles.page}>
-      {!isHandheld && <div className={styles.btn_column}>
+      {!isHandheld && user && <div className={styles.btn_column}>
         <div className={styles.btns}>
           <button className={`icon-btn ${likeDoc?.exists() ? styles.selected : ''}`} 
           onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
@@ -132,7 +132,7 @@ const PostPage: NextPage = (props: any) => {
 
         <div ref={contentRef} className={styles.content}></div>
 
-        {isHandheld && (<div className={styles.btn_row}>
+        {isHandheld && user && (<div className={styles.btn_row}>
           <div>
             <button className={`icon-btn ${likeDoc?.exists() ? styles.selected : ''}`} 
             onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>

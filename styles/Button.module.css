@@ -23,6 +23,7 @@
 .grey { background-color: rgb(150, 150, 150); }
 .blue { background-color: rgb(60, 78, 245); }
 .green { background-color: rgb(46, 212, 46); }
+.red { background-color: rgb(235, 23, 23); }
 
 .basic {
   background-color: var(--btn-color);

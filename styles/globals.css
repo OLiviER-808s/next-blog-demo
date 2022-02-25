@@ -48,6 +48,15 @@ a {
   margin-right: 1em;
 }
 
+.btn-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.btn-column button {
+  margin-bottom: 1em;
+}
+
 .reverse-btn-row {
   display: flex;
 }

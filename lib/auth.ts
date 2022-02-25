@@ -46,7 +46,7 @@ export const getUserWithUsername = async (username: string) => {
 
 export const getUserPosts = async (username: string) => {
   const ref = collection(db, 'posts')
-  const q = query(ref, where('authorname', '==', username), where('state', '==', 'posted'), orderBy('createdAt', 'desc'))
+  const q = query(ref, where('authorname', '==', username), orderBy('createdAt', 'desc'))
   const snap = await getDocs(q)
   const posts = snap.docs.map(post => {
     return { ...post.data(), id: post.id }
