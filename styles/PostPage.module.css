@@ -1,5 +1,6 @@
 .btn_column {
   min-width: 50px;
+  margin-right: 1.5em;
 }
 
 .btns {
@@ -19,15 +20,6 @@
   display: flex;
 }
 
-.article {
-  margin-left: 1.5em;
-}
-@media only screen and (max-width: 600px) {
-  .article {
-    margin: 0;
-  }
-}
-
 .btn_row {
   display: flex;
 }
@@ -37,6 +29,9 @@
 }
 .btn_row p {
   margin: 0;
+}
+.selected svg {
+  fill: rgb(46, 212, 46);
 }
 
 .header {

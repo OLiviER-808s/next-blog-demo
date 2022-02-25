@@ -106,15 +106,18 @@ const PostPage: NextPage = (props: any) => {
     <div className={styles.page}>
       {!isHandheld && <div className={styles.btn_column}>
         <div className={styles.btns}>
-          <button className="icon-btn" onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
+          <button className={`icon-btn ${likeDoc?.exists() ? styles.selected : ''}`} 
+          onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
             <LikeIcon />
           </button>
           <p>{ post.likeCount }</p>
-          <button className="icon-btn" onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
+          <button className={`icon-btn ${dislikeDoc?.exists() ? styles.selected : ''}`}
+          onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
             <DislikeIcon />
           </button>
           <p>{ post.dislikeCount }</p>
-          <button className="icon-btn" onClick={() => setCommentBox(true)}>
+          <button className="icon-btn" 
+          onClick={() => setCommentBox(true)}>
             <CommentIcon />
           </button>
           <p>{ comments.length }</p>
@@ -131,13 +134,15 @@ const PostPage: NextPage = (props: any) => {
 
         {isHandheld && (<div className={styles.btn_row}>
           <div>
-            <button className="icon-btn">
+            <button className={`icon-btn ${likeDoc?.exists() ? styles.selected : ''}`} 
+            onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
               <MobileLikeIcon />
             </button>
             <p>{ post.likeCount }</p>
           </div>
           <div>
-            <button className="icon-btn">
+            <button className={`icon-btn ${dislikeDoc?.exists() ? styles.selected : ''}`}
+            onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
               <MobileDislikeIcon />
             </button>
             <p>{ post.dislikeCount }</p>
