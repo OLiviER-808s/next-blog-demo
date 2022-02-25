@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar'
 import SidebarProvider from '../lib/SidebarProvider'
 import ThemeProvider from '../lib/ThemeProvider'
 import AuthProvider from '../lib/AuthProvider'
+import { Toaster } from 'react-hot-toast'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,6 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
               </div>
             </div>
+
+            <Toaster position="bottom-center" reverseOrder={false} />
           </SidebarProvider>
         </ThemeProvider>
       </AuthProvider>

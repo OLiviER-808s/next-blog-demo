@@ -14,6 +14,7 @@ import ProfileIcon from '../../public/icons/profile.svg'
 import LogoutIcon from '../../public/icons/logout18.svg'
 import DeleteIcon from '../../public/icons/delete18.svg'
 import { useRouter } from "next/router";
+import { deleteClick } from "../../lib/toast";
 
 
 const ProfilePage: NextPage = ({ author, posts }: any) => {
@@ -61,7 +62,7 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
                     <ProfileIcon />
                     Edit Profile
                   </Button>
-                  <Button color="red">
+                  <Button color="red" onClick={deleteClick}>
                     <DeleteIcon />
                     Delete Account
                   </Button>
