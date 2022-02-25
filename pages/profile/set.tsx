@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import debounce from "lodash.debounce";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import Card from "../../components/Card";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
 import { auth, db } from "../../lib/firebase";
+import { validateUsername } from "../../lib/validators";
 
 const SetProfile: NextPage = () => {
   const [username, setUsername] = useState('')
@@ -27,18 +28,9 @@ const SetProfile: NextPage = () => {
 
   const checkUsername = useCallback(
     debounce(async (username: string) => {
-      const length = username.length
+      const valid = await validateUsername(username)
 
-      if (length < 3 || length > 25 || username === 'set' || username === 'edit') {
-        setUsernameState('neutral')
-      }
-      else {
-        const ref = collection(db, 'users')
-        const q = query(ref, where('username', '==', username))
-        const snap = await getDocs(q)
-        const exists = snap.size > 0
-        setUsernameState(exists ? 'error' : 'valid')
-      }
+      setUsernameState(valid)
     }, 500),
     []
   )
@@ -54,6 +46,29 @@ const SetProfile: NextPage = () => {
       })
 
       router.push('/')
+    }
+  }
+
+  const skip = async () => {
+    let name: any = user?.email?.split('@')[0]
+    for (let i = 0; i < 4; i++) {
+      name += String(Math.floor(Math.random() * 10))
+    }
+    
+    const valid = await validateUsername(name)
+
+    if (valid === 'valid') {
+      const ref = doc(db, `users/${user?.uid}`)
+      await setDoc(ref, {
+        username: name,
+        photo: '/default profile pic.jpg',
+        email: user?.email
+      })
+
+      router.push('/')
+    }
+    else {
+      skip()
     }
   }
 
@@ -76,7 +91,7 @@ const SetProfile: NextPage = () => {
 
           <div className="btn-row">
             <Button color="green" onClick={create}>Create Profile</Button>
-            <Button secondary>Skip for Now</Button>
+            <Button secondary onClick={skip}>Skip for Now</Button>
           </div>
         </Card>
       </div>
