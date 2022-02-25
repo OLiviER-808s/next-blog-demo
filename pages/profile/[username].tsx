@@ -13,6 +13,7 @@ import SunIcon from '../../public/icons/sun18.svg'
 import ProfileIcon from '../../public/icons/profile.svg'
 import LogoutIcon from '../../public/icons/logout18.svg'
 import DeleteIcon from '../../public/icons/delete18.svg'
+import { useRouter } from "next/router";
 
 
 const ProfilePage: NextPage = ({ author, posts }: any) => {
@@ -22,6 +23,9 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
 
   const theme = useContext(ThemeUsedContext)
   const toggleTheme = useContext(ThemeUpdateContext)
+
+  const router = useRouter()
+  const editProfile = () => router.push(`/profile/edit`)
 
   return (
     <>
@@ -53,7 +57,7 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
                     {theme === 'light' ? <MoonIcon/> : <SunIcon />}
                     Switch Theme
                   </Button>
-                  <Button color="green">
+                  <Button color="green" onClick={editProfile}>
                     <ProfileIcon />
                     Edit Profile
                   </Button>
