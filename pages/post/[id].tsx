@@ -1,6 +1,6 @@
-import { collection, doc, getDoc, query, where, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, query, where, orderBy, onSnapshot, writeBatch, increment } from "firebase/firestore";
 import { NextPage } from "next";
-import { db, postToJSON } from "../../lib/firebase";
+import { auth, db, postToJSON } from "../../lib/firebase";
 import LikeIcon from '../../public/icons/like36.svg'
 import MobileLikeIcon from '../../public/icons/like24.svg'
 import DislikeIcon from '../../public/icons/dislike36.svg'
@@ -15,20 +15,77 @@ import useScreenWidth from "../../lib/screen-width";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../lib/AuthProvider";
 import CommentFeed from "../../components/CommentFeed";
+import { useDocument, useDocumentData } from 'react-firebase-hooks/firestore';
+import Post from "../../models/Post.model";
 
-const PostPage: NextPage = ({ post }: any) => {
+const PostPage: NextPage = (props: any) => {
   const contentRef: any = useRef(null)
   const isHandheld = useScreenWidth() < 600
   const router = useRouter()
   const user = useContext(AuthContext)
+  const uid = auth.currentUser?.uid
   let isUserPost: boolean | null
+
+  const [postData] = useDocumentData(doc(db, `posts/${props.post.id}`))
+  const post: Post = { ...postData, id: props.post.id } || props.post
 
   const [commentBox, setCommentBox] = useState(false)
   const [comments, setComments] = useState([])
 
+  const likeRef = doc(db, `posts/${post.id}/likes/${uid}`)
+  const [likeDoc] = useDocument(likeRef)
+  const dislikeRef = doc(db, `posts/${post.id}/dislikes/${uid}`)
+  const [dislikeDoc] = useDocument(dislikeRef)
+
+  const addLike = async () => {
+    const ref = doc(db, `posts/${post.id}`)
+    const batch = writeBatch(db)
+    
+    batch.update(ref, { likeCount: increment(1) })
+    batch.set(likeRef, { uid: user.uid })
+    if (dislikeDoc?.exists()) {
+      batch.update(ref, { dislikeCount: increment(-1) })
+      batch.delete(dislikeRef)
+    }
+
+    await batch.commit()
+  }
+  const removeLike = async () => {
+    const ref = doc(db, `posts/${post.id}`)
+    const batch = writeBatch(db)
+
+    batch.update(ref, { likeCount: increment(-1) })
+    batch.delete(likeRef)
+
+    await batch.commit()
+  }
+
+  const addDislike = async () => {
+    const ref = doc(db, `posts/${post.id}`)
+    const batch = writeBatch(db)
+
+    batch.update(ref, { dislikeCount: increment(1) })
+    batch.set(dislikeRef, { uid: user.uid })
+    if (likeDoc?.exists()) {
+      batch.update(ref, { likeCount: increment(-1) })
+      batch.delete(likeRef)
+    }
+
+    await batch.commit()
+  }
+  const removeDislike = async () => {
+    const ref = doc(db, `posts/${post.id}`)
+    const batch = writeBatch(db)
+
+    batch.update(ref, { dislikeCount: increment(-1) })
+    batch.delete(dislikeRef)
+
+    await batch.commit()
+  }
+
   useEffect(() => {
     // sets article content
-    contentRef.current.innerHTML = post.content
+    contentRef.current.innerHTML = props.post.content
 
     // checks if post belongs to user
     isUserPost = post.authorname === user?.username || null
@@ -49,25 +106,25 @@ const PostPage: NextPage = ({ post }: any) => {
     <div className={styles.page}>
       {!isHandheld && <div className={styles.btn_column}>
         <div className={styles.btns}>
-          <button className="icon-btn">
+          <button className="icon-btn" onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
             <LikeIcon />
           </button>
           <p>{ post.likeCount }</p>
-          <button className="icon-btn">
+          <button className="icon-btn" onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
             <DislikeIcon />
           </button>
           <p>{ post.dislikeCount }</p>
           <button className="icon-btn" onClick={() => setCommentBox(true)}>
             <CommentIcon />
           </button>
-          <p>0</p>
+          <p>{ comments.length }</p>
         </div>
       </div>}
 
       <div className={styles.article}>
         <div className={styles.header}>
           <h1>{ post.title }</h1>
-          <p>by <Link href={`/profile/${post.authorname}`}>{ post.authorname }</Link></p>
+          <p>by <Link href={`/profile/${post.authorname}`}><a>{ post.authorname }</a></Link></p>
         </div>
 
         <div ref={contentRef} className={styles.content}></div>
@@ -89,7 +146,7 @@ const PostPage: NextPage = ({ post }: any) => {
             <button className="icon-btn" onClick={() => setCommentBox(true)}>
               <MobileCommentIcon />
             </button>
-            <p>0</p>
+            <p>{ comments.length }</p>
           </div>
         </div>)}
 
