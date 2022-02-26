@@ -41,3 +41,10 @@
   margin-left: 0.25em;
   margin-bottom: 3px;
 }
+
+.edit svg {
+  fill: rgb(60, 78, 245);
+}
+.delete svg {
+  fill: rgb(235, 23, 23);
+}

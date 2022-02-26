@@ -4,13 +4,27 @@ import styles from '../styles/PostFeed.module.css'
 import Card from './Card'
 import LikeIcon from '../public/icons/like18.svg'
 import DislikeIcon from '../public/icons/dislike18.svg'
+import DeleteIcon from '../public/icons/delete18.svg'
+import EditIcon from '../public/icons/edit18.svg'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../lib/AuthProvider'
+import HoldButton from './HoldButton'
+import DeleteBar from './DeleteBar'
+import { deletePost } from '../lib/postService'
 
 const Post = ({ post }: any) => {
   const words = post.content.split(' ').length
-  const mins = (words / 100 + 1).toFixed(0);
+  const mins = (words / 100 + 1).toFixed(0)
+
+  const user = useContext(AuthContext)
+  const isUserPost = post.authorname === user?.username
+
+  const [fill, setFill] = useState(0)
+  const [deleted, setDelete] = useState(false)
 
   return (
-    <div className={styles.post}>
+    <>
+    {!deleted && <div className={styles.post}>
       <Card>
         <p>by <Link href={`/profile/${post.authorname}`}>{ post.authorname }</Link></p>
 
@@ -23,11 +37,33 @@ const Post = ({ post }: any) => {
 
           <div className="spacer"></div>
 
+          {isUserPost && <>
+            <div className={styles.edit}>
+              <button className='icon-btn'>
+                <EditIcon />
+              </button>
+            </div>
+            <div className={styles.delete}>
+              <HoldButton speed={20} setFill={setFill} onEnd={() => {
+                deletePost(post.id)
+                setDelete(true)
+              }}>
+                <button className="icon-btn">
+                  <DeleteIcon />
+                </button>
+              </HoldButton>
+            </div>
+          </>}
           <p className={styles.count}>{ post.likeCount } <LikeIcon /></p>
           <p className={styles.count}>{ post.dislikeCount } <DislikeIcon /></p>
         </div>
       </Card>
-    </div>
+
+      <div className="center">
+        <DeleteBar progress={fill}/>
+      </div>
+    </div>}
+    </>
   )
 }
 
