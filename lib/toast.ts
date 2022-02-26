@@ -7,7 +7,7 @@ const style = {
   color: 'var(--text-color)'
 }
 
-export const deleteClick = () => toast('Hold to delete', {
+export const deleteClick = () => toast('Hold the button to delete', {
   style: style,
   duration: 1200
 })

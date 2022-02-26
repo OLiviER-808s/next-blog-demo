@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import PostFeed from "../../components/PostFeed";
@@ -15,6 +15,9 @@ import LogoutIcon from '../../public/icons/logout18.svg'
 import DeleteIcon from '../../public/icons/delete18.svg'
 import { useRouter } from "next/router";
 import { deleteClick } from "../../lib/toast";
+import HoldButton from "../../components/HoldButton";
+import ProgressBar from "../../components/ProgressBar";
+import DeleteBar from "../../components/DeleteBar";
 
 
 const ProfilePage: NextPage = ({ author, posts }: any) => {
@@ -27,6 +30,8 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
 
   const router = useRouter()
   const editProfile = () => router.push(`/profile/edit`)
+
+  const [fill, setFill] = useState(0)
 
   return (
     <>
@@ -62,16 +67,19 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
                     <ProfileIcon />
                     Edit Profile
                   </Button>
-                  <Button color="red" onClick={deleteClick}>
-                    <DeleteIcon />
-                    Delete Account
-                  </Button>
+                  <HoldButton speed={35} setFill={setFill} onEnd={() => console.log('end')}>
+                    <Button color="red">
+                      <DeleteIcon />
+                      Delete Account
+                    </Button>
+                  </HoldButton>
                 </div>
+
+                <DeleteBar progress={fill}/>
               </div>
             </Tab>
           </TabGroup>
         )}
-
         {!isUserPage && <PostFeed posts={posts} />}
       </div>
     </>

@@ -1,0 +1,6 @@
+.toast {
+  width: 100%;
+  max-width: 600px;
+  position: fixed;
+  bottom: 1em;
+}
