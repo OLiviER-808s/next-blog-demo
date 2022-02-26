@@ -11,6 +11,7 @@ import { AuthContext } from '../lib/AuthProvider'
 import HoldButton from './HoldButton'
 import DeleteBar from './DeleteBar'
 import { deletePost } from '../lib/postService'
+import { useRouter } from 'next/router'
 
 const Post = ({ post }: any) => {
   const words = post.content.split(' ').length
@@ -21,6 +22,9 @@ const Post = ({ post }: any) => {
 
   const [fill, setFill] = useState(0)
   const [deleted, setDelete] = useState(false)
+
+  const router = useRouter()
+  const editPost = () => router.push(`/post/edit/${post.id}`)
 
   return (
     <>
@@ -39,7 +43,7 @@ const Post = ({ post }: any) => {
 
           {isUserPost && <>
             <div className={styles.edit}>
-              <button className='icon-btn'>
+              <button className='icon-btn' onClick={editPost}>
                 <EditIcon />
               </button>
             </div>
