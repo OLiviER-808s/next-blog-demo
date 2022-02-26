@@ -7,7 +7,7 @@ import DeleteIcon from '../public/icons/delete18.svg'
 import HoldButton from "./HoldButton";
 import DeleteBar from "./DeleteBar";
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
-import { useLogout } from "../lib/auth";
+import { deleteAccount, useLogout } from "../lib/auth";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
@@ -37,7 +37,7 @@ const AccountSettings = () => {
           <ProfileIcon />
           Edit Profile
         </Button>
-        <HoldButton speed={50} setFill={setFill} onEnd={() => console.log('end')}>
+        <HoldButton speed={50} setFill={setFill} onEnd={deleteAccount}>
           <Button color="red">
             <DeleteIcon />
             Delete Account

@@ -1,5 +1,6 @@
-import { signOut } from 'firebase/auth';
-import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { deleteUser, signOut } from 'firebase/auth';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from './firebase';
@@ -53,4 +54,20 @@ export const getUserPosts = async (username: string) => {
   })
 
   return posts
+}
+
+export const deleteAccount = async () => {
+  const user = auth.currentUser
+  const router = useRouter()
+
+  if (user) {
+    // deletes in firebase
+    const ref = doc(db, `users/${user?.uid}`)
+    deleteDoc(ref)
+
+    // deletes in auth
+    deleteUser(user)
+
+    router.push('/')
+  }
 }
