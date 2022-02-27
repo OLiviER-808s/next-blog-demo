@@ -27,6 +27,8 @@ const CommentFeed = ({ comments }: any) => {
       {comments.map((comment: Comment) => {
         return <Comment key={comment.id} comment={comment} />
       })}
+
+      {comments.length === 0 && <p>No comments</p>}
     </div>
   )
 }
