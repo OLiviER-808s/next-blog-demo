@@ -2,6 +2,7 @@ import { collection, getDocs, limit, orderBy, query, startAfter, where } from 'f
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import Button from '../components/Button'
+import MobileAddButton from '../components/MobileAddButton'
 import PostFeed from '../components/PostFeed'
 import Toolbar from '../components/Toolbar'
 import { db, fromMillis, postToJSON } from '../lib/firebase'
@@ -46,6 +47,7 @@ const Home: NextPage = (props: any) => {
         {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
         {postsEnd && 'You have reached the end!'}
       </div>
+      <MobileAddButton />
     </>
   )
 }
