@@ -10,7 +10,7 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../lib/AuthProvider'
 import HoldButton from './HoldButton'
 import DeleteBar from './DeleteBar'
-import { deletePost, publishPost } from '../lib/postService'
+import { usePostDelete, publishPost } from '../lib/postService'
 import { useRouter } from 'next/router'
 import Button from './Button'
 
@@ -23,6 +23,7 @@ const Post = ({ post }: any) => {
 
   const [fill, setFill] = useState(0)
   const [show, setShow] = useState(true)
+  const deletePost = usePostDelete(post.id)
 
   const router = useRouter()
   const editPost = () => router.push(`/post/edit/${post.id}`)
@@ -61,7 +62,7 @@ const Post = ({ post }: any) => {
             </div>
             <div className={styles.delete}>
               <HoldButton speed={20} setFill={setFill} onEnd={() => {
-                deletePost(post.id)
+                deletePost()
                 setShow(false)
               }}>
                 <button className="icon-btn delete-btn">

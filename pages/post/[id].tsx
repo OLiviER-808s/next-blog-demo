@@ -22,7 +22,7 @@ import CommentFeed from "../../components/CommentFeed";
 import { useDocument, useDocumentData } from 'react-firebase-hooks/firestore';
 import Post from "../../models/Post.model";
 import HoldButton from "../../components/HoldButton";
-import { deletePost } from "../../lib/postService";
+import { usePostDelete } from "../../lib/postService";
 import DeleteBar from "../../components/DeleteBar";
 
 const PostPage: NextPage = (props: any) => {
@@ -45,6 +45,7 @@ const PostPage: NextPage = (props: any) => {
   const [dislikeDoc] = useDocument(dislikeRef)
 
   const [fill, setFill] = useState(0)
+  const deletePost = usePostDelete(props.post.id)
 
   const addLike = async () => {
     const ref = doc(db, `posts/${post.id}`)
@@ -134,7 +135,7 @@ const PostPage: NextPage = (props: any) => {
             <button className="icon-btn edit-btn">
               <EditIcon />
             </button>
-            <HoldButton speed={20} setFill={setFill} onEnd={() => deletePost(props.post.id)}>
+            <HoldButton speed={20} setFill={setFill} onEnd={deletePost}>
               <button className="icon-btn delete-btn">
                 <DeleteIcon />
               </button>
@@ -180,7 +181,7 @@ const PostPage: NextPage = (props: any) => {
                 </button>
               </div>
               <div>
-                <HoldButton speed={20} setFill={setFill} onEnd={() => deletePost(props.post.id)}>
+                <HoldButton speed={20} setFill={setFill} onEnd={deletePost}>
                   <button className="icon-btn delete-btn">
                     <MobileDeleteIcon />
                   </button>

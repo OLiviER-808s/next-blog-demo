@@ -56,18 +56,21 @@ export const getUserPosts = async (username: string) => {
   return posts
 }
 
-export const deleteAccount = async () => {
-  const user = auth.currentUser
+export const useAccountDelete = () => {
   const router = useRouter()
 
-  if (user) {
-    // deletes in firebase
-    const ref = doc(db, `users/${user?.uid}`)
-    deleteDoc(ref)
-
-    // deletes in auth
-    deleteUser(user)
-
-    router.push('/')
+  return async () => {
+    const user = auth.currentUser
+    
+    if (user) {
+      // deletes in firebase
+      const ref = doc(db, `users/${user?.uid}`)
+      deleteDoc(ref)
+  
+      // deletes in auth
+      deleteUser(user)
+  
+      router.push('/')
+    }
   }
 }

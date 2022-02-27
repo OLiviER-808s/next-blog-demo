@@ -3,7 +3,6 @@ import debounce from "lodash.debounce";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Card from "../../components/Card";

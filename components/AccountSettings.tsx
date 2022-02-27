@@ -7,7 +7,7 @@ import DeleteIcon from '../public/icons/delete18.svg'
 import HoldButton from "./HoldButton";
 import DeleteBar from "./DeleteBar";
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
-import { deleteAccount, useLogout } from "../lib/auth";
+import { useAccountDelete, useLogout } from "../lib/auth";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
@@ -21,6 +21,7 @@ const AccountSettings = () => {
   const editProfile = () => router.push(`/profile/edit`)
 
   const [fill, setFill] = useState(0)
+  const deleteAccount = useAccountDelete()
 
   return (
     <div className="center">
