@@ -11,7 +11,7 @@ import MobileEditIcon from '../../public/icons/edit24.svg'
 import MobileDeleteIcon from '../../public/icons/delete24.svg'
 import DeleteIcon from '../../public/icons/delete36.svg'
 import EditIcon from '../../public/icons/edit36.svg'
-import styles from '../../styles/postPage.module.css'
+import styles from '../../styles/PostPage.module.css'
 import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import AddComment from "../../components/AddComment";

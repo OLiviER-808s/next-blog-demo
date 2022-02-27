@@ -1,7 +1,6 @@
-import styles from '../styles/TextBox.module.css'
+import styles from '../styles/Textbox.module.css'
 import TickIcon from '../public/icons/tick.svg'
 import CrossIcon from '../public/icons/cross.svg'
-import { useEffect, useState } from 'react'
 
 interface TextboxProps {
   type?: string,
