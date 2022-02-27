@@ -10,14 +10,14 @@ import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
 import AuthCheck from "../../lib/AuthCheck";
 import { AuthContext } from "../../lib/AuthProvider";
-import { auth, db } from "../../lib/firebase";
+import { db } from "../../lib/firebase";
 import { validateUsername } from "../../lib/validators";
 
 const EditProfile: NextPage = () => {
-  const user = useContext(AuthContext)
+  const user = useContext(AuthContext) || null
 
-  const [username, setUsername] = useState(user.username)
-  const [bio, setBio] = useState(user.bio)
+  const [username, setUsername] = useState(user?.username || '')
+  const [bio, setBio] = useState(user?.bio || '')
   const [image, setImage] = useState('/default profile pic.jpg')
 
   const router = useRouter()
