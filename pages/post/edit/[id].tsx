@@ -8,6 +8,7 @@ import Textbox from "../../../components/Textbox";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../../lib/AuthProvider";
+import AuthCheck from "../../../lib/AuthCheck";
 
 const EditPost: NextPage = ({ post }: any) => {
   const [title, setTitle] = useState(post.title)
@@ -49,22 +50,24 @@ const EditPost: NextPage = ({ post }: any) => {
   }, [])
 
   return (
-    <div style={{'width': '100%'}}>
-      <Card>
-        <Textbox value={title} onChange={updateTitle} big fullWidth placeholder="Title" type="text" 
-        error_msg="Post needs a title" validationState={error ? 'error' : 'neutral'} />
+    <AuthCheck>
+      <div style={{'width': '100%'}}>
+        <Card>
+          <Textbox value={title} onChange={updateTitle} big fullWidth placeholder="Title" type="text" 
+          error_msg="Post needs a title" validationState={error ? 'error' : 'neutral'} />
 
-        <div ref={editor}>
-          <Editor />
-        </div>
+          <div ref={editor}>
+            <Editor />
+          </div>
 
-        <div className="reverse-btn-row">
-          <div className="spacer"></div>
-          <Button secondary onClick={() => router.push('/')}>Cancel</Button>
-          <Button color="green" onClick={() => editPost()}>Edit Post</Button>
-        </div>
-      </Card>
-    </div>
+          <div className="reverse-btn-row">
+            <div className="spacer"></div>
+            <Button secondary onClick={() => router.push('/')}>Cancel</Button>
+            <Button color="green" onClick={() => editPost()}>Edit Post</Button>
+          </div>
+        </Card>
+      </div>
+    </AuthCheck>
   )
 }
 

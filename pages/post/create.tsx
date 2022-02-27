@@ -6,6 +6,7 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Editor from "../../components/Editor";
 import Textbox from "../../components/Textbox";
+import AuthCheck from "../../lib/AuthCheck";
 import { AuthContext } from "../../lib/AuthProvider";
 import { db, timestamp } from "../../lib/firebase";
 import Post from "../../models/Post.model";
@@ -49,22 +50,24 @@ const CreatePage: NextPage = () => {
   }
 
   return (
-    <div style={{'width': '100%'}}>
-      <Card>
-        <Textbox value={title} onChange={updateTitle} big fullWidth placeholder="Title" type="text" 
-        error_msg="Post needs a title" validationState={error ? 'error' : 'neutral'} />
+    <AuthCheck>
+      <div style={{'width': '100%'}}>
+        <Card>
+          <Textbox value={title} onChange={updateTitle} big fullWidth placeholder="Title" type="text" 
+          error_msg="Post needs a title" validationState={error ? 'error' : 'neutral'} />
 
-        <div ref={editor}>
-          <Editor />
-        </div>
+          <div ref={editor}>
+            <Editor />
+          </div>
 
-        <div className="reverse-btn-row">
-          <div className="spacer"></div>
-          <Button secondary onClick={() => uploadPost('draft')}>Draft</Button>
-          <Button color="green" onClick={() => uploadPost('posted')}>Upload Post</Button>
-        </div>
-      </Card>
-    </div>
+          <div className="reverse-btn-row">
+            <div className="spacer"></div>
+            <Button secondary onClick={() => uploadPost('draft')}>Draft</Button>
+            <Button color="green" onClick={() => uploadPost('posted')}>Upload Post</Button>
+          </div>
+        </Card>
+      </div>
+    </AuthCheck>
   )
 }
 

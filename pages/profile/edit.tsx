@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
+import AuthCheck from "../../lib/AuthCheck";
 import { AuthContext } from "../../lib/AuthProvider";
 import { auth, db } from "../../lib/firebase";
 import { validateUsername } from "../../lib/validators";
@@ -61,29 +62,31 @@ const EditProfile: NextPage = () => {
   }
 
   return (
-    <div className="center">
-      <div style={{'width': '100%', 'maxWidth': '430px'}}>
-        <Card>
-          <h3 style={{'marginBottom': '0'}}>Your Account has been created!</h3>
-          <p style={{'marginBottom': '2em'}}>Now it's time to customise your profile...</p>
+    <AuthCheck>
+      <div className="center">
+        <div style={{'width': '100%', 'maxWidth': '430px'}}>
+          <Card>
+            <h3 style={{'marginBottom': '0'}}>Your Account has been created!</h3>
+            <p style={{'marginBottom': '2em'}}>Now it's time to customise your profile...</p>
 
-          <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
-            <Avatar src={image} width={3} />
-            <Button color="blue">Change Profile Pic</Button>
-          </div>
+            <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
+              <Avatar src={image} width={3} />
+              <Button color="blue">Change Profile Pic</Button>
+            </div>
 
-          <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
-          icon validationState={usernameState} error_msg="Username is already taken"/>
+            <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
+            icon validationState={usernameState} error_msg="Username is already taken"/>
 
-          <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
+            <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
-          <div className="btn-row">
-            <Button color="green" onClick={edit}>Edit Profile</Button>
-            <Button secondary onClick={cancel}>Cancel</Button>
-          </div>
-        </Card>
+            <div className="btn-row">
+              <Button color="green" onClick={edit}>Edit Profile</Button>
+              <Button secondary onClick={cancel}>Cancel</Button>
+            </div>
+          </Card>
+        </div>
       </div>
-    </div>
+    </AuthCheck>
   )
 }
 
