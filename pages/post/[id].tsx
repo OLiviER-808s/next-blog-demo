@@ -7,6 +7,10 @@ import DislikeIcon from '../../public/icons/dislike36.svg'
 import MobileDislikeIcon from '../../public/icons/dislike24.svg'
 import CommentIcon from '../../public/icons/comment36.svg'
 import MobileCommentIcon from '../../public/icons/comment24.svg'
+import MobileEditIcon from '../../public/icons/edit24.svg'
+import MobileDeleteIcon from '../../public/icons/delete24.svg'
+import DeleteIcon from '../../public/icons/delete36.svg'
+import EditIcon from '../../public/icons/edit36.svg'
 import styles from '../../styles/postPage.module.css'
 import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -17,6 +21,9 @@ import { AuthContext } from "../../lib/AuthProvider";
 import CommentFeed from "../../components/CommentFeed";
 import { useDocument, useDocumentData } from 'react-firebase-hooks/firestore';
 import Post from "../../models/Post.model";
+import HoldButton from "../../components/HoldButton";
+import { deletePost } from "../../lib/postService";
+import DeleteBar from "../../components/DeleteBar";
 
 const PostPage: NextPage = (props: any) => {
   const contentRef: any = useRef(null)
@@ -36,6 +43,8 @@ const PostPage: NextPage = (props: any) => {
   const [likeDoc] = useDocument(likeRef)
   const dislikeRef = doc(db, `posts/${post.id}/dislikes/${uid}`)
   const [dislikeDoc] = useDocument(dislikeRef)
+
+  const [fill, setFill] = useState(0)
 
   const addLike = async () => {
     const ref = doc(db, `posts/${post.id}`)
@@ -121,6 +130,16 @@ const PostPage: NextPage = (props: any) => {
             <CommentIcon />
           </button>
           <p>{ comments.length }</p>
+          {user && <>
+            <button className="icon-btn edit-btn">
+              <EditIcon />
+            </button>
+            <HoldButton speed={20} setFill={setFill} onEnd={() => deletePost(props.post.id)}>
+              <button className="icon-btn delete-btn">
+                <DeleteIcon />
+              </button>
+            </HoldButton>
+          </>}
         </div>
       </div>}
 
@@ -153,12 +172,29 @@ const PostPage: NextPage = (props: any) => {
             </button>
             <p>{ comments.length }</p>
           </div>
+          {user && (
+            <>
+              <div>
+                <button className="icon-btn edit-btn">
+                  <MobileEditIcon />
+                </button>
+              </div>
+              <div>
+                <HoldButton speed={20} setFill={setFill} onEnd={() => deletePost(props.post.id)}>
+                  <button className="icon-btn delete-btn">
+                    <MobileDeleteIcon />
+                  </button>
+                </HoldButton>
+              </div>
+            </>
+          )}
         </div>)}
 
         <h3>Comments:</h3>
         <CommentFeed comments={comments} />
 
         <AddComment show={commentBox} close={() => setCommentBox(false)}/>
+        <DeleteBar progress={fill} />
       </div>
     </div>
   )

@@ -34,6 +34,10 @@
   fill: rgb(46, 212, 46);
 }
 
+.article {
+  width: 100%;
+}
+
 .header {
   margin-top: 0.2em;
   margin-bottom: 2em;

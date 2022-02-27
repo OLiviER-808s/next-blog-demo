@@ -43,7 +43,7 @@ const Post = ({ post }: any) => {
 
           {isUserPost && <>
             <div className={styles.edit}>
-              <button className='icon-btn' onClick={editPost}>
+              <button className='icon-btn edit-btn' onClick={editPost}>
                 <EditIcon />
               </button>
             </div>
@@ -52,7 +52,7 @@ const Post = ({ post }: any) => {
                 deletePost(post.id)
                 setDelete(true)
               }}>
-                <button className="icon-btn">
+                <button className="icon-btn delete-btn">
                   <DeleteIcon />
                 </button>
               </HoldButton>

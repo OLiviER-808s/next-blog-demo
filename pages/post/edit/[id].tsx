@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, postToJSON, timestamp } from "../../../lib/firebase";
 import Button from "../../../components/Button";
 import Card from "../../../components/Card";
@@ -8,7 +8,6 @@ import Textbox from "../../../components/Textbox";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../../lib/AuthProvider";
-import Post from "../../../models/Post.model";
 
 const EditPost: NextPage = ({ post }: any) => {
   const [title, setTitle] = useState(post.title)
