@@ -10,8 +10,9 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../lib/AuthProvider'
 import HoldButton from './HoldButton'
 import DeleteBar from './DeleteBar'
-import { deletePost } from '../lib/postService'
+import { deletePost, publishPost } from '../lib/postService'
 import { useRouter } from 'next/router'
+import Button from './Button'
 
 const Post = ({ post }: any) => {
   const words = post.content.split(' ').length
@@ -21,20 +22,31 @@ const Post = ({ post }: any) => {
   const isUserPost = post.authorname === user?.username
 
   const [fill, setFill] = useState(0)
-  const [deleted, setDelete] = useState(false)
+  const [show, setShow] = useState(true)
 
   const router = useRouter()
   const editPost = () => router.push(`/post/edit/${post.id}`)
 
   return (
     <>
-    {!deleted && <div className={styles.post}>
+    {show && <div className={styles.post}>
       <Card>
         <p>by <Link href={`/profile/${post.authorname}`}>{ post.authorname }</Link></p>
 
-        <h2 className={styles.title}>
-          <Link href={`/post/${post.id}`}>{ post.title }</Link>
-        </h2>
+        <div className={styles.row}>
+          <h2 className={styles.title}>
+            <Link href={`/post/${post.id}`}>{ post.title }</Link>
+          </h2>
+
+          <div className="spacer"></div>
+
+          {post.state === 'draft' ? 
+          <Button color="green" onClick={() => {
+            publishPost(post.id)
+            setShow(false)
+          }}>Publish</Button> 
+          : ''}
+        </div>
 
         <div className={styles.footer}>
           <p>{words} words. {mins} min read</p>
@@ -50,7 +62,7 @@ const Post = ({ post }: any) => {
             <div className={styles.delete}>
               <HoldButton speed={20} setFill={setFill} onEnd={() => {
                 deletePost(post.id)
-                setDelete(true)
+                setShow(false)
               }}>
                 <button className="icon-btn delete-btn">
                   <DeleteIcon />
