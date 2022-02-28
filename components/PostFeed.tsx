@@ -85,8 +85,6 @@ const Post = ({ post }: any) => {
 }
 
 const PostFeed = ({ posts }: any) => {
-  console.log(posts)
-
   return (
     <div className={styles.feed}>
       {posts.map((post: Post) => {

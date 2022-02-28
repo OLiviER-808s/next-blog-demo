@@ -22,6 +22,7 @@ const HoldButton = (props: any) => {
   
   const endFill = () => {
     btn.current.removeEventListener('mousedown', () => {})
+    btn.current.removeEventListener('touchstart', () => {})
     props.onEnd()
   }
 
@@ -29,6 +30,13 @@ const HoldButton = (props: any) => {
     btn.current.addEventListener('mousedown', () => updateFill())
 
     btn.current.addEventListener('mouseup', () => {
+      clearInterval(interval)
+      props.setFill(0)
+    })
+
+    btn.current.addEventListener('touchstart', () => updateFill())
+
+    btn.current.addEventListener('touchend', () => {
       clearInterval(interval)
       props.setFill(0)
     })

@@ -37,7 +37,6 @@ const Editor = () => {
 
   useEffect(() => {
     const btns = headerRef.current.querySelectorAll('button')
-    contentRef.current.focus()
 
     for (let i = 0; i < btns.length; i++) {
       btns[i].addEventListener('click', () => {
