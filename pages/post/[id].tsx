@@ -128,7 +128,7 @@ const PostPage: NextPage = (props: any) => {
           </button>
           <p>{ post.dislikeCount }</p>
           <button className="icon-btn" 
-          onClick={() => setCommentBox(true)}>
+          onClick={() => setCommentBox(!commentBox)}>
             <CommentIcon />
           </button>
           <p>{ comments.length }</p>
@@ -169,7 +169,7 @@ const PostPage: NextPage = (props: any) => {
             <p>{ post.dislikeCount }</p>
           </div>
           <div>
-            <button className="icon-btn" onClick={() => setCommentBox(true)}>
+            <button className="icon-btn" onClick={() => setCommentBox(!commentBox)}>
               <MobileCommentIcon />
             </button>
             <p>{ comments.length }</p>
