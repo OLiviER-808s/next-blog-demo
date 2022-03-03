@@ -10,6 +10,7 @@ import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
 import { useAccountDelete, useLogout } from "../lib/auth";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
+import { deleteClick } from "../lib/toast";
 
 const AccountSettings = () => {
   const logout = useLogout()
@@ -38,7 +39,7 @@ const AccountSettings = () => {
           <ProfileIcon />
           Edit Profile
         </Button>
-        <HoldButton speed={50} setFill={setFill} onEnd={deleteAccount}>
+        <HoldButton speed={50} setFill={setFill} onEnd={deleteAccount} onStart={deleteClick}>
           <Button color="red">
             <DeleteIcon />
             Delete Account

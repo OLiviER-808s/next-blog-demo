@@ -27,7 +27,10 @@ const HoldButton = (props: any) => {
   }
 
   useEffect(() => {
-    btn.current.addEventListener('mousedown', () => updateFill())
+    btn.current.addEventListener('mousedown', () => {
+      props.onStart()
+      updateFill()
+    })
 
     btn.current.addEventListener('mouseup', () => {
       clearInterval(interval)

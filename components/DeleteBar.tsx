@@ -7,7 +7,6 @@ const DeleteBar = ({ progress }: any) => {
     <>
       {progress > 0 && <div className={styles.toast}>
         <Card>
-          Hold to Delete
           <ProgressBar fillWidth={progress} color="var(--secondary-bg-color)" fillColor="rgb(235, 23, 23)" />
         </Card>
       </div>}

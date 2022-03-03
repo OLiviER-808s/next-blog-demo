@@ -24,6 +24,7 @@ import Post from "../../models/Post.model";
 import HoldButton from "../../components/HoldButton";
 import { usePostDelete } from "../../lib/postService";
 import DeleteBar from "../../components/DeleteBar";
+import { deleteClick } from "../../lib/toast";
 
 const PostPage: NextPage = (props: any) => {
   const contentRef: any = useRef(null)
@@ -181,7 +182,7 @@ const PostPage: NextPage = (props: any) => {
                 </button>
               </div>
               <div>
-                <HoldButton speed={20} setFill={setFill} onEnd={deletePost}>
+                <HoldButton speed={20} setFill={setFill} onEnd={deletePost} onStart={deleteClick}>
                   <button className="icon-btn delete-btn">
                     <MobileDeleteIcon />
                   </button>

@@ -8,6 +8,6 @@ const style = {
 }
 
 export const deleteClick = () => toast('Hold the button to delete', {
-  style: style,
-  duration: 1200
+  style: { ...style, 'marginBottom': '4em' },
+  duration: 1100
 })

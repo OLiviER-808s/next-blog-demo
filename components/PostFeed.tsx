@@ -13,6 +13,7 @@ import DeleteBar from './DeleteBar'
 import { usePostDelete, publishPost } from '../lib/postService'
 import { useRouter } from 'next/router'
 import Button from './Button'
+import { deleteClick } from '../lib/toast'
 
 const Post = ({ post }: any) => {
   const words = post.content.split(' ').length
@@ -61,7 +62,7 @@ const Post = ({ post }: any) => {
               </button>
             </div>
             <div className={styles.delete}>
-              <HoldButton speed={20} setFill={setFill} onEnd={() => {
+              <HoldButton speed={20} setFill={setFill} onStart={deleteClick} onEnd={() => {
                 deletePost()
                 setShow(false)
               }}>
