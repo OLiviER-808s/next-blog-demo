@@ -8,7 +8,7 @@ body {
   transition: 0.3s;
 }
 
-a {
+a, a:visited {
   color: inherit;
   text-decoration: none;
 }

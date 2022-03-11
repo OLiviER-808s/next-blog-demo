@@ -7,7 +7,6 @@ const CropImage = (props: any) => {
   let cropper: any;
 
   const finishCrop = () => {
-    console.log(cropper)
     const canvas = cropper.getCroppedCanvas();
     canvas.toBlob((blob: any) => {
       const reader = new FileReader()

@@ -9,6 +9,7 @@ import Card from "../../components/Card";
 import CropImage from "../../components/CropImage";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
+import { setProfilePic } from "../../lib/auth";
 import AuthCheck from "../../lib/AuthCheck";
 import { AuthContext } from "../../lib/AuthProvider";
 import { db } from "../../lib/firebase";
@@ -29,12 +30,18 @@ const EditProfile: NextPage = () => {
   const ImageUploadRef: any = useRef(null)
 
   useEffect(() => {
+    setUsername(user?.username)
+    setBio(user?.bio)
+    setImage(user?.photo)
+  }, [user])
+
+  useEffect(() => {
     checkUsername(username)
   }, [username])
 
   const checkUsername = useCallback(
     debounce(async (username: string) => {
-      if (username !== user?.username) {
+      if (user && username !== user.username) {
         const valid = await validateUsername(username)
 
         setUsernameState(valid)
@@ -47,16 +54,20 @@ const EditProfile: NextPage = () => {
   )
 
   const edit = async () => {
-    if (usernameState === 'valid') {
+    if (usernameState !== 'error') {
       const ref = doc(db, `users/${user?.uid}`)
+
+      let downloadUrl = user.photo
+      if (image !== user.photo) downloadUrl = await setProfilePic(image, user.uid)
+
       await setDoc(ref, {
         username: username,
         bio: bio,
         email: user?.email,
-        photo: image
+        photo: downloadUrl
       })
 
-      router.push(`/profile/${user.username}`)
+      router.push(`/profile/${username}`)
     }
   }
 
@@ -85,8 +96,7 @@ const EditProfile: NextPage = () => {
       <div className="center">
         <div style={{'width': '100%', 'maxWidth': '430px'}}>
           <Card>
-            <h3 style={{'marginBottom': '0'}}>Your Account has been created!</h3>
-            <p style={{'marginBottom': '2em'}}>Now it's time to customise your profile...</p>
+            <h2 style={{'marginBottom': '1.2em'}}>Edit Your Profile</h2>
 
             <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
               <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />

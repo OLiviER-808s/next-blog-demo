@@ -3,7 +3,9 @@ import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, where 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from './firebase';
+import { base64ToBlob } from './not my code';
+import { auth, db, storage } from './firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 export const useUserData = () => {
   const [user] = useAuthState(auth);
@@ -73,4 +75,15 @@ export const useAccountDelete = () => {
       router.push('/')
     }
   }
+}
+
+export const setProfilePic = async (pic: any, uid: string) => {
+  const jpegFile64 = pic.replace(/^data:image\/(png|jpeg);base64,/, "");
+  const file = base64ToBlob(jpegFile64, 'image/jpeg')
+  const r = ref(storage, `profiles/${uid}`)
+
+  console.log(file)
+  await uploadBytes(r, file)
+
+  return await getDownloadURL(r)
 }

@@ -1,5 +1,5 @@
 import { signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
@@ -18,11 +18,15 @@ const Signup: NextPage = () => {
     const u = credential.user
 
     const ref = doc(db, `users/${u.uid}`);
-    await setDoc(ref, {
-      username: u.displayName,
-      email: u.email,
-      photo: u.photoURL
-    }, { merge: true });
+    const d = await getDoc(ref)
+
+    if (!d.exists()) {
+      await setDoc(ref, {
+        username: u.displayName,
+        email: u.email,
+        photo: u.photoURL
+      }, { merge: true });
+    }
     router.push('/');
   }
 
