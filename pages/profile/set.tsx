@@ -10,6 +10,7 @@ import Card from "../../components/Card";
 import CropImage from "../../components/CropImage";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
+import { setProfilePic } from "../../lib/auth";
 import { auth, db } from "../../lib/firebase";
 import { validateUsername } from "../../lib/validators";
 
@@ -42,6 +43,10 @@ const SetProfile: NextPage = () => {
   const create = async () => {
     if (usernameState === 'valid') {
       const ref = doc(db, `users/${user?.uid}`)
+
+      let downloadUrl;
+      if (image !== '/default profile pic.jpg') downloadUrl = await setProfilePic(image, user?.uid)
+
       await setDoc(ref, {
         username: username,
         bio: bio,

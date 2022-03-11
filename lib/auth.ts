@@ -77,7 +77,7 @@ export const useAccountDelete = () => {
   }
 }
 
-export const setProfilePic = async (pic: any, uid: string) => {
+export const setProfilePic = async (pic: any, uid: any) => {
   const jpegFile64 = pic.replace(/^data:image\/(png|jpeg);base64,/, "");
   const file = base64ToBlob(jpegFile64, 'image/jpeg')
   const r = ref(storage, `profiles/${uid}`)
