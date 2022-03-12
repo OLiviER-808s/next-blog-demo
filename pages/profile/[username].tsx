@@ -37,7 +37,7 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
             </Tab>
           </TabGroup>
         )}
-        {!isUserPage && <PostFeed posts={posts} />}
+        {!isUserPage && <PostFeed posts={posts.filter((p: any) => p.state === 'posted')} />}
       </div>
     </>
   )
