@@ -10,6 +10,7 @@ import SunIcon from '../public/icons/sun18.svg'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
 import { AuthContext } from '../lib/AuthProvider'
 import { useLogout } from '../lib/auth'
+import Backdrop from './Backdrop'
 
 const Sidebar = () => {
   const isOpen = useContext(SidebarOpenContext)
@@ -25,50 +26,54 @@ const Sidebar = () => {
   const logout = useLogout()
 
   return (
-    <div className={styles.sidebar} hidden={!isOpen}>
-      <div className={styles.list}>
-        <div>
-          <button className="icon-btn dp36" onClick={() => setSidebar(false)}>
-            <MenuIcon />
-          </button>
-          <h2>Menu</h2>
-        </div>
-
-        <div>
-          <Link href="/">Home</Link>
-        </div>
-        <div>
-          <Link href="/about">About</Link>
-        </div>
-        {!user ? (
-          <>
+    <div hidden={!isOpen}>
+      <Backdrop onClick={() => setSidebar(false)}>
+        <div className={styles.sidebar}>
+          <div className={styles.list}>
             <div>
-              <Link href="/signup">Signup</Link>
+              <button className="icon-btn dp36" onClick={() => setSidebar(false)}>
+                <MenuIcon />
+              </button>
+              <h2>Menu</h2>
+            </div>
+
+            <div>
+              <Link href="/">Home</Link>
             </div>
             <div>
-              <Link href="/signup?tab=1">Login</Link>
+              <Link href="/about">About</Link>
             </div>
-          </>
-        ) : (
-          <>
+            {!user ? (
+              <>
+                <div>
+                  <Link href="/signup">Signup</Link>
+                </div>
+                <div>
+                  <Link href="/signup?tab=1">Login</Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <Link href={`/profile/${user.username}`}>My Account</Link>
+                </div>
+                <div onClick={logout}>
+                  <Link href="/">Logout</Link>
+                </div>
+              </>
+            )}
+
+            <div className="spacer"></div>
+
             <div>
-              <Link href={`/profile/${user.username}`}>My Account</Link>
+              <Button color="basic" onClick={toggleTheme}>
+                {theme === 'light' ? <MoonIcon/> : <SunIcon />}
+                Toggle Theme
+              </Button>
             </div>
-            <div onClick={logout}>
-              <Link href="/">Logout</Link>
-            </div>
-          </>
-        )}
-
-        <div className="spacer"></div>
-
-        <div>
-          <Button color="basic" onClick={toggleTheme}>
-            {theme === 'light' ? <MoonIcon/> : <SunIcon />}
-            Toggle Theme
-          </Button>
+          </div>
         </div>
-      </div>
+      </Backdrop>
     </div>
   )
 }
