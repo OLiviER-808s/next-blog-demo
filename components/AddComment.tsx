@@ -1,4 +1,5 @@
 import { addDoc, collection } from 'firebase/firestore'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../lib/AuthProvider'
@@ -8,6 +9,27 @@ import styles from '../styles/AddComment.module.css'
 import Button from './Button'
 import Card from './Card'
 import Textarea from './Textarea'
+
+const slideUp = {
+  hidden: {
+    y: '100vh',
+    opacity: 0
+  },
+  visible: {
+    y: '0',
+    opacity: 1,
+    transition: {
+      duration: 0.25
+    }
+  },
+  exit: {
+    y: '100vh',
+    opacity: 0,
+    transition: {
+      duration: 0.5
+    }
+  }
+}
 
 const AddComment = (props: any) => {
   const [comment, setComment] = useState('')
@@ -38,10 +60,11 @@ const AddComment = (props: any) => {
   }
 
   return (
-    <>
+    <AnimatePresence initial={false} exitBeforeEnter={true} onExitComplete={() => null}>
       {props.show && (
         <div className="center">
-          <div className={styles.popover}>
+          <motion.div className={styles.popover} onClick={(e) => e.stopPropagation()}
+          variants={slideUp} initial="hidden" animate="visible" exit="exit">
             <Card>
               <form>
                 <Textarea value={comment} onChange={setComment} 
@@ -53,10 +76,10 @@ const AddComment = (props: any) => {
                 </div>
               </form>
             </Card>
-          </div>
+          </motion.div>
         </div>
       )}
-    </>
+    </AnimatePresence>
   )
 }
 

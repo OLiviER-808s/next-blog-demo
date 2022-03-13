@@ -32,7 +32,7 @@ const PostPage: NextPage = (props: any) => {
   const router = useRouter()
   const user = useContext(AuthContext)
   const uid = auth.currentUser?.uid
-  let isUserPost: boolean | null
+  const [isUserPost, setIsUserPost] = useState(false);
 
   const [postData] = useDocumentData(doc(db, `posts/${props.post.id}`))
   const post: Post = { ...postData, id: props.post.id } || props.post
@@ -99,7 +99,7 @@ const PostPage: NextPage = (props: any) => {
     contentRef.current.innerHTML = props.post.content
 
     // checks if post belongs to user
-    isUserPost = post.authorname === user?.username || null
+    setIsUserPost(post.authorname === user?.username)
 
     // sets comments
     const postID = router.query.id
@@ -132,11 +132,11 @@ const PostPage: NextPage = (props: any) => {
             <CommentIcon />
           </button>
           <p>{ comments.length }</p>
-          {user && <>
+          {isUserPost && <>
             <button className="icon-btn edit-btn">
               <EditIcon />
             </button>
-            <HoldButton speed={20} setFill={setFill} onEnd={deletePost}>
+            <HoldButton speed={20} setFill={setFill} onEnd={deletePost} onStart={deleteClick}>
               <button className="icon-btn delete-btn">
                 <DeleteIcon />
               </button>
@@ -174,7 +174,7 @@ const PostPage: NextPage = (props: any) => {
             </button>
             <p>{ comments.length }</p>
           </div>
-          {user && (
+          {isUserPost && (
             <>
               <div>
                 <button className="icon-btn edit-btn">
