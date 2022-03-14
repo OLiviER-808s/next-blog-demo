@@ -4,7 +4,7 @@
   line-height: 0;
   z-index: 3;
   background-color: rgb(46, 212, 46);
-  position: absolute;
+  position: fixed;
   bottom: 1.5em;
   right: 1.5em;
   border-radius: 50%;
