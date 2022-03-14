@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc, where, writeBatch } from "firebase/firestore";
 import debounce from "lodash.debounce";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -55,17 +55,34 @@ const EditProfile: NextPage = () => {
 
   const edit = async () => {
     if (usernameState !== 'error') {
-      const ref = doc(db, `users/${user?.uid}`)
+      const batch = writeBatch(db)
 
+      // updates profile
       let downloadUrl = user.photo
       if (image !== user.photo) downloadUrl = await setProfilePic(image, user.uid)
 
-      await setDoc(ref, {
+      batch.set(doc(db, `users/${user?.uid}`), {
         username: username,
         bio: bio,
         email: user?.email,
         photo: downloadUrl
       })
+
+      // updates associated posts and comments
+      const posts_q = query(collection(db, 'posts'), where('authorname', '==', user.username))
+      const comments_q = query(collection(db, 'comments'), where('authorname', '==', user.username))
+
+      const posts = await getDocs(posts_q)
+      posts.docs.forEach(post => {
+        batch.update(doc(db, `posts/${post.id}`), { authorname: username })
+      })
+
+      const comments = await getDocs(comments_q)
+      comments.docs.forEach(comment => {
+        batch.update(doc(db, `comments/${comment.id}`), { authorname: username, photo: downloadUrl })
+      })
+
+      batch.commit()
 
       router.push(`/profile/${username}`)
     }
