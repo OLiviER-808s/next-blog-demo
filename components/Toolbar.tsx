@@ -7,7 +7,7 @@ import SunIcon from '../public/icons/sun24.svg'
 import MoonIcon from '../public/icons/moon24.svg'
 import LogoutIcon from '../public/icons/logout24.svg'
 import LoginIcon from '../public/icons/login24.svg'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
 import { AuthContext } from '../lib/AuthProvider'
 import useScreenWidth from '../lib/screen-width'
@@ -15,6 +15,7 @@ import Button from './Button'
 import AddIcon from '../public/icons/add.svg'
 import { useLogout } from '../lib/auth'
 import { useRouter } from 'next/router'
+import Dropdown from './Dropdown'
 
 const Toolbar = () => {
   const theme = useContext(ThemeUsedContext)
@@ -27,13 +28,19 @@ const Toolbar = () => {
   const login = () => router.push('/signup?tab=1')
   const createPost = () => router.push('/post/create')
 
+  const [dropdown, setDropdown] = useState(false)
+
   return (
     <div className={styles.bar}>
       <button className="icon-btn">
         <SearchIcon />
       </button>
-      <button className="icon-btn">
+
+      <button className="icon-btn" onClick={() => setDropdown(!dropdown)}>
         <SortIcon />
+        <Dropdown show={dropdown}>
+          dropdown
+        </Dropdown>
       </button>
 
       <div className="spacer"></div>

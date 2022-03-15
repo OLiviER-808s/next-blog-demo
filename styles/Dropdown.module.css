@@ -1,0 +1,8 @@
+.dropdown {
+  position: absolute;
+  z-index: 30;
+  border-radius: 6px;
+  background-color: #1b1b1b;
+  padding: 1em 0;
+  color: var(--text-color);
+}
