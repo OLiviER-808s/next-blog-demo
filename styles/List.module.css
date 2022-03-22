@@ -1,0 +1,18 @@
+.clickable {
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  background-color: inherit;
+}
+
+.list div {
+  background-color: inherit;
+}
+
+.item {
+  padding: 0.5em;
+  width: 100%;
+}

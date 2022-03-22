@@ -17,6 +17,7 @@ import { useLogout } from '../lib/auth'
 import { useRouter } from 'next/router'
 import Dropdown from './Dropdown'
 import IconButton from './IconButton'
+import { List, ListItem } from './List'
 
 const Toolbar = () => {
   const theme = useContext(ThemeUsedContext)
@@ -40,7 +41,13 @@ const Toolbar = () => {
       <IconButton onClick={() => setDropdown(!dropdown)}>
         <SortIcon />
         <Dropdown show={dropdown}>
-          dropdown
+          <h3 style={{margin: '0.5em'}}>Sort By: </h3>
+          <List clickable>
+            <ListItem>Newest</ListItem>
+            <ListItem>Oldest</ListItem>
+            <ListItem>Most Liked</ListItem>
+            <ListItem>Most Disliked</ListItem>
+          </List>
         </Dropdown>
       </IconButton>
 
