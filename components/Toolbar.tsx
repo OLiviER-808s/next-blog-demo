@@ -16,6 +16,7 @@ import AddIcon from '../public/icons/add.svg'
 import { useLogout } from '../lib/auth'
 import { useRouter } from 'next/router'
 import Dropdown from './Dropdown'
+import IconButton from './IconButton'
 
 const Toolbar = () => {
   const theme = useContext(ThemeUsedContext)
@@ -32,9 +33,9 @@ const Toolbar = () => {
 
   return (
     <div className={styles.bar}>
-      <button className="icon-btn">
+      <IconButton>
         <SearchIcon />
-      </button>
+      </IconButton>
 
       <button className="icon-btn" onClick={() => setDropdown(!dropdown)}>
         <SortIcon />
