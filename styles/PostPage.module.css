@@ -32,9 +32,6 @@
 .btn_row p {
   margin: 0;
 }
-.selected svg {
-  fill: rgb(46, 212, 46);
-}
 
 .article {
   width: 100%;

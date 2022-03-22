@@ -14,6 +14,7 @@ import { usePostDelete, publishPost } from '../lib/postService'
 import { useRouter } from 'next/router'
 import Button from './Button'
 import { deleteClick } from '../lib/toast'
+import IconButton from './IconButton'
 
 const Post = ({ post }: any) => {
   const words = post.content.split(' ').length
@@ -57,18 +58,18 @@ const Post = ({ post }: any) => {
 
           {isUserPost && <>
             <div className={styles.edit}>
-              <button className='icon-btn edit-btn' onClick={editPost}>
+              <IconButton edit onClick={editPost}>
                 <EditIcon />
-              </button>
+              </IconButton>
             </div>
             <div className={styles.delete}>
               <HoldButton speed={20} setFill={setFill} onStart={deleteClick} onEnd={() => {
                 deletePost()
                 setShow(false)
               }}>
-                <button className="icon-btn delete-btn">
+                <IconButton delete>
                   <DeleteIcon />
-                </button>
+                </IconButton>
               </HoldButton>
             </div>
           </>}

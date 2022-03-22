@@ -16,6 +16,7 @@
   align-items: center;
   width: 100%;
   max-width: 850px;
+  background-color: inherit;
 }
 
 .container h1 {

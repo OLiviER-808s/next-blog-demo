@@ -12,6 +12,7 @@ import { AuthContext } from '../lib/AuthProvider'
 import { useLogout } from '../lib/auth'
 import Backdrop from './Backdrop'
 import { AnimatePresence, motion } from 'framer-motion'
+import IconButton from './IconButton'
 
 const slideIn = {
   hidden: {
@@ -51,9 +52,9 @@ const Sidebar = () => {
           variants={slideIn} initial="hidden" animate="visible" exit="exit">
             <div className={styles.list}>
               <div>
-                <button className="icon-btn dp36" onClick={() => setSidebar(false)}>
+                <IconButton onClick={() => setSidebar(false)}>
                   <MenuIcon />
-                </button>
+                </IconButton>
                 <h2>Menu</h2>
               </div>
 

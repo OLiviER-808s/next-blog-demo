@@ -46,7 +46,7 @@ const HoldButton = (props: any) => {
   }, [])
 
   return (
-    <div ref={btn}>
+    <div ref={btn} style={{'backgroundColor': 'inherit'}}>
       { props.children }
     </div>
   )

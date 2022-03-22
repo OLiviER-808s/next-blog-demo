@@ -37,12 +37,12 @@ const Toolbar = () => {
         <SearchIcon />
       </IconButton>
 
-      <button className="icon-btn" onClick={() => setDropdown(!dropdown)}>
+      <IconButton onClick={() => setDropdown(!dropdown)}>
         <SortIcon />
         <Dropdown show={dropdown}>
           dropdown
         </Dropdown>
-      </button>
+      </IconButton>
 
       <div className="spacer"></div>
 
@@ -54,25 +54,25 @@ const Toolbar = () => {
         <div className="spacer"></div>
       </>)}
 
-      <button className="icon-btn">
+      <IconButton>
         <DownIcon />
-      </button>
-      <button className="icon-btn">
+      </IconButton>
+      <IconButton>
         <UpIcon />
-      </button>
+      </IconButton>
 
       {!isHandheld && (<>
         <button className='icon-btn' onClick={switchThme}>
           {theme === 'light' ? <MoonIcon /> : <SunIcon />}
         </button>
         {user ? (
-          <button className="icon-btn" onClick={logout}>
+          <IconButton onClick={logout}>
             <LogoutIcon />
-          </button>
+          </IconButton>
         ) : (
-          <button className="icon-btn" onClick={login}>
+          <IconButton onClick={login}>
             <LoginIcon />
-          </button>
+          </IconButton>
         )}
       </>)}
     </div>

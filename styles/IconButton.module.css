@@ -6,3 +6,13 @@
   line-height: 0;
   padding: 0.3em;
 }
+
+.edit svg {
+  fill: rgb(60, 78, 245);
+}
+.delete svg {
+  fill: rgb(235, 23, 23);
+}
+.selected svg {
+  fill: rgb(46, 212, 46);
+}

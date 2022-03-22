@@ -25,6 +25,7 @@ import HoldButton from "../../components/HoldButton";
 import { usePostDelete } from "../../lib/postService";
 import DeleteBar from "../../components/DeleteBar";
 import { deleteClick } from "../../lib/toast";
+import IconButton from "../../components/IconButton";
 
 const PostPage: NextPage = (props: any) => {
   const contentRef: any = useRef(null)
@@ -117,29 +118,29 @@ const PostPage: NextPage = (props: any) => {
     <div className={styles.page}>
       {!isHandheld && user && <div className={styles.btn_column}>
         <div className={styles.btns}>
-          <button className={`icon-btn ${likeDoc?.exists() ? styles.selected : ''}`} 
+          <IconButton selected={likeDoc?.exists()}
           onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
             <LikeIcon />
-          </button>
+          </IconButton>
           <p>{ post.likeCount }</p>
-          <button className={`icon-btn ${dislikeDoc?.exists() ? styles.selected : ''}`}
+          <IconButton selected={dislikeDoc?.exists()}
           onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
             <DislikeIcon />
-          </button>
+          </IconButton>
           <p>{ post.dislikeCount }</p>
-          <button className="icon-btn" 
+          <IconButton 
           onClick={() => setCommentBox(!commentBox)}>
             <CommentIcon />
-          </button>
+          </IconButton>
           <p>{ comments.length }</p>
           {isUserPost && <>
-            <button className="icon-btn edit-btn">
+            <IconButton edit>
               <EditIcon />
-            </button>
+            </IconButton>
             <HoldButton speed={20} setFill={setFill} onEnd={deletePost} onStart={deleteClick}>
-              <button className="icon-btn delete-btn">
+              <IconButton delete>
                 <DeleteIcon />
-              </button>
+              </IconButton>
             </HoldButton>
           </>}
         </div>
@@ -155,37 +156,37 @@ const PostPage: NextPage = (props: any) => {
 
         {isHandheld && user && (<div className={styles.btn_row}>
           <div>
-            <button className={`icon-btn ${likeDoc?.exists() ? styles.selected : ''}`} 
+            <IconButton selected={likeDoc?.exists()} 
             onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
               <MobileLikeIcon />
-            </button>
+            </IconButton>
             <p>{ post.likeCount }</p>
           </div>
           <div>
-            <button className={`icon-btn ${dislikeDoc?.exists() ? styles.selected : ''}`}
+            <IconButton selected={dislikeDoc?.exists()}
             onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
               <MobileDislikeIcon />
-            </button>
+            </IconButton>
             <p>{ post.dislikeCount }</p>
           </div>
           <div>
-            <button className="icon-btn" onClick={() => setCommentBox(!commentBox)}>
+            <IconButton onClick={() => setCommentBox(!commentBox)}>
               <MobileCommentIcon />
-            </button>
+            </IconButton>
             <p>{ comments.length }</p>
           </div>
           {isUserPost && (
             <>
               <div>
-                <button className="icon-btn edit-btn">
+                <IconButton edit>
                   <MobileEditIcon />
-                </button>
+                </IconButton>
               </div>
               <div>
                 <HoldButton speed={20} setFill={setFill} onEnd={deletePost} onStart={deleteClick}>
-                  <button className="icon-btn delete-btn">
+                  <IconButton delete>
                     <MobileDeleteIcon />
-                  </button>
+                  </IconButton>
                 </HoldButton>
               </div>
             </>
