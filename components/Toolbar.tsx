@@ -40,7 +40,7 @@ const Toolbar = () => {
 
       <IconButton onClick={() => setDropdown(!dropdown)}>
         <SortIcon />
-        <Dropdown show={dropdown}>
+        <Dropdown show={dropdown} setShow={setDropdown} closeOnClick>
           <h3 style={{margin: '0.5em'}}>Sort By: </h3>
           <List clickable>
             <ListItem>Newest</ListItem>

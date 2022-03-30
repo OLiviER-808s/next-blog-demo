@@ -22,12 +22,12 @@ const drop = {
   }
 }
 
-const Dropdown = ({ children, show }: any) => {
+const Dropdown = ({ children, show, setShow, closeOnClick }: any) => {
   return (
     <AnimatePresence initial={false} exitBeforeEnter={true} onExitComplete={() => null}>
       {show && (
-        <div className={styles.wrapper}>
-          <motion.div className={styles.dropdown} onClick={(e) => e.stopPropagation()} 
+        <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
+          <motion.div className={styles.dropdown} onClick={() => closeOnClick ? setShow(false) : null} 
           variants={drop} initial="hidden" animate="visible" exit="exit">
             { children }
           </motion.div>
