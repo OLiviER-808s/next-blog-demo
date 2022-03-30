@@ -1,6 +1,6 @@
-import { collection, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
+import { collection, getDocs, limit, onSnapshot, orderBy, query, startAfter, where } from 'firebase/firestore'
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import MobileAddButton from '../components/MobileAddButton'
 import PostFeed from '../components/PostFeed'
@@ -10,38 +10,52 @@ import { db, fromMillis, postToJSON } from '../lib/firebase'
 const LIMIT = 15
 
 const Home: NextPage = (props: any) => {
+
+  const [q, updateQ] = useState(query(
+    collection(db, 'posts'),
+    where('state', '==', 'posted'),
+    orderBy('createdAt', 'desc'),
+    limit(LIMIT)
+  ))
+
   const [postsEnd, setPostsEnd] = useState(false)
   const [posts, setPosts] = useState(props.posts)
 
-  const getMorePosts = async () => {
-    const last = posts[posts.length - 1]
-
-    const cursor = fromMillis(last.createdAt)
-
-    const q = query(
-      collection(db, 'posts'),
-      where('state', '==', 'posted'),
-      orderBy('createdAt', 'desc'),
-      limit(LIMIT),
-      startAfter(cursor)
-    )
-
+  const changeFilter = async () => {
     const snap = await getDocs(q)
     const newPosts = snap.docs.map(d => {
       const p = { ...d.data(), id: d.id }
       return postToJSON(p)
     })
 
-    setPosts(posts.concat(newPosts));
+    setPosts(newPosts)
+  }
+
+  const getMorePosts = async () => {
+    const last = posts[posts.length - 1]
+
+    const cursor = fromMillis(last.createdAt)
+
+    const snap = await getDocs(query(q, startAfter(cursor)))
+    const newPosts = snap.docs.map(d => {
+      const p = { ...d.data(), id: d.id }
+      return postToJSON(p)
+    })
+
+    setPosts(posts.concat(newPosts))
 
     if (newPosts.length < LIMIT) {
-      setPostsEnd(true);
+      setPostsEnd(true)
     }
   }
 
+  useEffect(() => {
+    changeFilter()
+  }, [q])
+
   return (
     <>
-      <Toolbar></Toolbar>
+      <Toolbar setQuery={updateQ}></Toolbar>
       <PostFeed posts={posts} />
       <div className="center">
         {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}

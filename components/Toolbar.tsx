@@ -18,8 +18,10 @@ import { useRouter } from 'next/router'
 import Dropdown from './Dropdown'
 import IconButton from './IconButton'
 import { List, ListItem } from './List'
+import { collection, limit, orderBy, query, where } from 'firebase/firestore'
+import { db } from '../lib/firebase'
 
-const Toolbar = () => {
+const Toolbar = ({ setQuery }: any) => {
   const theme = useContext(ThemeUsedContext)
   const user = useContext(AuthContext)
   const isHandheld = useScreenWidth() < 600
@@ -31,6 +33,31 @@ const Toolbar = () => {
   const createPost = () => router.push('/post/create')
 
   const [dropdown, setDropdown] = useState(false)
+  const [filter, setFilter] = useState('newest')
+
+  const applyFilter = (attribute: string) => {
+    setFilter(attribute)
+
+    const ref = collection(db, 'posts')
+    let q: any;
+
+    switch (attribute) {
+      case 'newest':
+        q = query(ref, orderBy('createdAt', 'desc'))
+        break
+      case 'oldest':
+        q = query(ref, orderBy('createdAt', 'asc'))
+        break
+      case 'likes':
+        q = query(ref, orderBy('likeCount', 'desc'))
+        break
+      case 'dislikes':
+        q = query(ref, orderBy('dislikeCount', 'desc'))
+        break
+    }
+
+    setQuery(query(q, where('state', '==', 'posted'), limit(15)))
+  }
 
   return (
     <div className={styles.bar}>
@@ -43,10 +70,10 @@ const Toolbar = () => {
         <Dropdown show={dropdown} setShow={setDropdown} closeOnClick>
           <h3 style={{margin: '0.5em'}}>Sort By: </h3>
           <List clickable>
-            <ListItem>Newest</ListItem>
-            <ListItem>Oldest</ListItem>
-            <ListItem>Most Liked</ListItem>
-            <ListItem>Most Disliked</ListItem>
+            <ListItem onClick={() => applyFilter('newest')}>Newest</ListItem>
+            <ListItem onClick={() => applyFilter('oldest')}>Oldest</ListItem>
+            <ListItem onClick={() => applyFilter('likes')}>Most Liked</ListItem>
+            <ListItem onClick={() => applyFilter('dislikes')}>Most Disliked</ListItem>
           </List>
         </Dropdown>
       </IconButton>
