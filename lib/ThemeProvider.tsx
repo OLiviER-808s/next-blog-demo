@@ -13,12 +13,14 @@ const ThemeProvider = (props: any) => {
       document.documentElement.style.setProperty('--primary-bg-color', 'rgb(230, 230, 230)');
       document.documentElement.style.setProperty('--secondary-bg-color', 'rgb(202, 202, 202)');
       document.documentElement.style.setProperty('--btn-color', '#bfbfbf');
+      document.documentElement.style.setProperty('--dropdown-color', '#cccccc');
     }
     else if (theme === 'dark') {
       document.documentElement.style.setProperty('--text-color', 'white');
       document.documentElement.style.setProperty('--primary-bg-color', '#303030');
       document.documentElement.style.setProperty('--secondary-bg-color', '#424242');
       document.documentElement.style.setProperty('--btn-color', '#2e2e2e');
+      document.documentElement.style.setProperty('--dropdown-color', '#1b1b1b');
     }
   }, [theme])
 

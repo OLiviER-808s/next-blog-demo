@@ -1,12 +1,40 @@
+import { AnimatePresence, motion } from 'framer-motion'
 import styles from '../styles/Dropdown.module.css'
 
-const Dropdown = ({ children, show }: any) => {
+const drop = {
+  hidden: {
+    y: '-100vh',
+    opacity: 0
+  },
+  visible: {
+    y: '0',
+    opacity: 1,
+    transition: {
+      duration: 0.25
+    }
+  },
+  exit: {
+    y: '-100vh',
+    opacity: 0,
+    transition: {
+      duration: 0.5
+    }
+  }
+}
 
-  return show ? 
-    <div className={styles.dropdown}>
-      { children }
-    </div>
-  : <></>
+const Dropdown = ({ children, show }: any) => {
+  return (
+    <AnimatePresence initial={false} exitBeforeEnter={true} onExitComplete={() => null}>
+      {show && (
+        <div className={styles.wrapper}>
+          <motion.div className={styles.dropdown} onClick={(e) => e.stopPropagation()} 
+          variants={drop} initial="hidden" animate="visible" exit="exit">
+            { children }
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  )
 }
 
 export default Dropdown

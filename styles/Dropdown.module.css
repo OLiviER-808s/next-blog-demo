@@ -1,11 +1,15 @@
 .dropdown {
-  position: absolute;
-  z-index: 30;
   border-radius: 6px;
-  background-color: #1b1b1b;
+  background-color: var(--dropdown-color);
   padding: 1em 0;
   color: var(--text-color);
-  width: 180px;
   font-size: 0.9rem;
   line-height: initial;
+}
+
+.wrapper {
+  position: absolute;
+  z-index: 30;
+  overflow: hidden;
+  width: 180px;
 }
