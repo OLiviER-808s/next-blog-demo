@@ -6,6 +6,7 @@ import MobileAddButton from '../components/MobileAddButton'
 import PostFeed from '../components/PostFeed'
 import Toolbar from '../components/Toolbar'
 import { db, fromMillis, postToJSON } from '../lib/firebase'
+import { useMyEffect } from '../lib/hooks'
 
 const LIMIT = 15
 
@@ -49,9 +50,7 @@ const Home: NextPage = (props: any) => {
     }
   }
 
-  useEffect(() => {
-    changeFilter()
-  }, [q])
+  useMyEffect(changeFilter, [q])
 
   return (
     <>

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import styles from '../styles/Header.module.css'
-import useScreenWidth from "../lib/screen-width"
+import { useScreenWidth } from "../lib/hooks"
 import { useContext } from "react";
 import { SidebarUpdateContext } from "../lib/SidebarProvider";
 import MenuIcon from '../public/icons/menu_closed.svg';

@@ -15,7 +15,7 @@ import styles from '../../styles/PostPage.module.css'
 import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import AddComment from "../../components/AddComment";
-import useScreenWidth from "../../lib/screen-width";
+import { useScreenWidth } from "../../lib/hooks";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../lib/AuthProvider";
 import CommentFeed from "../../components/CommentFeed";

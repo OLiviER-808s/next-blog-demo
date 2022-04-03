@@ -11,7 +11,7 @@ import UnderlineIcon from '../public/icons/editor/underline.svg'
 import styles from '../styles/Editor.module.css'
 import { useEffect, useRef } from 'react'
 import { useCommandListener } from '../lib/commandListener'
-import useScreenWidth from '../lib/screen-width'
+import { useScreenWidth } from '../lib/hooks'
 
 const Editor = () => {
   const headerRef: any = useRef(null)

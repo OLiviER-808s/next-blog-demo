@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-const useScreenWidth = () => {
+export const useScreenWidth = () => {
   const [width, setWidth] = useState(0)
 
   useEffect(() => {
@@ -16,4 +16,12 @@ const useScreenWidth = () => {
   return width
 }
 
-export default useScreenWidth
+// useEffect hook that ignores the first render
+export const useMyEffect = (func: any, dep: Array<any>) => {
+  const [first, setFirst] = useState(true)
+
+  useEffect(() => {
+    if (first) setFirst(false)
+    else func()
+  }, dep)
+}
