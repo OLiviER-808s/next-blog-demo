@@ -7,7 +7,7 @@ import SunIcon from '../public/icons/sun24.svg'
 import MoonIcon from '../public/icons/moon24.svg'
 import LogoutIcon from '../public/icons/logout24.svg'
 import LoginIcon from '../public/icons/login24.svg'
-import { useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { ThemeUpdateContext, ThemeUsedContext } from '../lib/ThemeProvider'
 import { AuthContext } from '../lib/AuthProvider'
 import { useScreenWidth } from '../lib/hooks'
@@ -21,8 +21,9 @@ import { List, ListItem } from './List'
 import { collection, limit, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 import SearchBar from './SearchBar'
+import debounce from 'lodash.debounce'
 
-const Toolbar = ({ setQuery }: any) => {
+const Toolbar = ({ setQuery, setSearch }: any) => {
   const theme = useContext(ThemeUsedContext)
   const user = useContext(AuthContext)
   const isHandheld = useScreenWidth() < 600
@@ -36,7 +37,10 @@ const Toolbar = ({ setQuery }: any) => {
   const [dropdown, setDropdown] = useState(false)
   const [filter, setFilter] = useState('newest')
 
+  const [searchText, setText] = useState('')
+
   const applyFilter = (attribute: string) => {
+    if (filter === attribute) return;
     setFilter(attribute)
 
     const ref = collection(db, 'posts')
@@ -60,9 +64,20 @@ const Toolbar = ({ setQuery }: any) => {
     setQuery(query(q, where('state', '==', 'posted'), limit(15)))
   }
 
+  const searchChange = useCallback(
+    debounce(async (value) => {
+      setSearch(value)
+    }, 500),
+    []
+  )
+
+  useEffect(() => {
+    searchChange(searchText)
+  }, [searchText])
+
   return (
     <div className={styles.bar}>
-      <SearchBar />
+      <SearchBar value={searchText} onChange={setText} />
 
       <IconButton onClick={() => setDropdown(!dropdown)}>
         <SortIcon />

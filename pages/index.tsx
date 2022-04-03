@@ -18,9 +18,14 @@ const Home: NextPage = (props: any) => {
     orderBy('createdAt', 'desc'),
     limit(LIMIT)
   ))
+  const [searchVal, setSearchVal] = useState('')
 
   const [postsEnd, setPostsEnd] = useState(false)
+
+  // all posts in query
   const [posts, setPosts] = useState(props.posts)
+  // posts displayed on screen
+  const [displyPosts, setDisplayPosts] = useState(props.posts)
 
   const changeFilter = async () => {
     const snap = await getDocs(q)
@@ -51,12 +56,15 @@ const Home: NextPage = (props: any) => {
   }
 
   useMyEffect(changeFilter, [q])
+  useEffect(() => {
+    setDisplayPosts(posts.filter((p: any) => p.title.toLocaleLowerCase().search(searchVal) > -1))
+  }, [searchVal])
 
   return (
     <>
-      <Toolbar setQuery={updateQ}></Toolbar>
+      <Toolbar setQuery={updateQ} setSearch={setSearchVal}></Toolbar>
 
-      <PostFeed posts={posts} />
+      <PostFeed posts={displyPosts} />
 
       <div className="center">
         {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
