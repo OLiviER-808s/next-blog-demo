@@ -20,6 +20,7 @@ import IconButton from './IconButton'
 import { List, ListItem } from './List'
 import { collection, limit, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../lib/firebase'
+import SearchBar from './SearchBar'
 
 const Toolbar = ({ setQuery }: any) => {
   const theme = useContext(ThemeUsedContext)
@@ -61,9 +62,7 @@ const Toolbar = ({ setQuery }: any) => {
 
   return (
     <div className={styles.bar}>
-      <IconButton>
-        <SearchIcon />
-      </IconButton>
+      <SearchBar />
 
       <IconButton onClick={() => setDropdown(!dropdown)}>
         <SortIcon />
