@@ -88,10 +88,10 @@ const Toolbar = ({ setQuery }: any) => {
       </>)}
 
       <IconButton>
-        <DownIcon />
+        <UpIcon />
       </IconButton>
       <IconButton>
-        <UpIcon />
+        <DownIcon />
       </IconButton>
 
       {!isHandheld && (<>
