@@ -56,11 +56,14 @@ const Home: NextPage = (props: any) => {
   return (
     <>
       <Toolbar setQuery={updateQ}></Toolbar>
+
       <PostFeed posts={posts} />
+
       <div className="center">
         {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
         {postsEnd && 'You have reached the end!'}
       </div>
+
       <MobileAddButton />
     </>
   )

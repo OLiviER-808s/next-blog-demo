@@ -80,6 +80,7 @@ a, a:visited {
   justify-content: center;
 }
 .page-content {
+  position: relative;
   width: 100%;
   max-width: 850px;
 }
