@@ -14,6 +14,7 @@ const ThemeProvider = (props: any) => {
       document.documentElement.style.setProperty('--secondary-bg-color', 'rgb(202, 202, 202)');
       document.documentElement.style.setProperty('--btn-color', '#bfbfbf');
       document.documentElement.style.setProperty('--dropdown-color', '#cccccc');
+      document.documentElement.style.setProperty('--border-color', 'rgb(153, 153, 153)');
     }
     else if (theme === 'dark') {
       document.documentElement.style.setProperty('--text-color', 'white');
@@ -21,6 +22,7 @@ const ThemeProvider = (props: any) => {
       document.documentElement.style.setProperty('--secondary-bg-color', '#424242');
       document.documentElement.style.setProperty('--btn-color', '#2e2e2e');
       document.documentElement.style.setProperty('--dropdown-color', '#1b1b1b');
+      document.documentElement.style.setProperty('--border-color', 'rgb(90, 90, 90)');
     }
   }, [theme])
 
