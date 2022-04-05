@@ -54,6 +54,7 @@ const CreatePage: NextPage = () => {
       <div style={{'width': '100%'}}>
         <Card>
           <Textbox value={title} onChange={updateTitle} big fullWidth placeholder="Title" type="text" 
+          autoFocus 
           error_msg="Post needs a title" validationState={error ? 'error' : 'neutral'} />
 
           <div ref={editor}>

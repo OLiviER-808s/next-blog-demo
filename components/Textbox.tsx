@@ -11,7 +11,8 @@ interface TextboxProps {
   onChange?: Function,
   value?: string,
   placeholder?: string,
-  validationState?: string
+  validationState?: string,
+  autoFocus?: boolean
 }
 
 const Textbox = (props: TextboxProps) => {
@@ -29,6 +30,7 @@ const Textbox = (props: TextboxProps) => {
         ${props.big ? styles.big : ''}`}
         value={props.value}
         onChange={(e) => props.onChange ? props.onChange(e.target.value) : null}
+        autoFocus={props.autoFocus}
         placeholder={props.placeholder} />
 
         {props.icon && (

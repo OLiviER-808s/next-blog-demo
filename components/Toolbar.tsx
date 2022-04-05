@@ -102,17 +102,10 @@ const Toolbar = ({ setQuery, setSearch }: any) => {
         <div className="spacer"></div>
       </>)}
 
-      <IconButton>
-        <UpIcon />
-      </IconButton>
-      <IconButton>
-        <DownIcon />
-      </IconButton>
-
       {!isHandheld && (<>
-        <button className='icon-btn' onClick={switchThme}>
+        <IconButton onClick={switchThme}>
           {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-        </button>
+        </IconButton>
         {user ? (
           <IconButton onClick={logout}>
             <LogoutIcon />
