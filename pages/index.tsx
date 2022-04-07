@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import MobileAddButton from '../components/MobileAddButton'
 import PostFeed from '../components/PostFeed'
+import ScrollUpButton from '../components/scrollUpButton'
 import Toolbar from '../components/Toolbar'
 import { db, fromMillis, postToJSON } from '../lib/firebase'
 import { useMyEffect } from '../lib/hooks'
@@ -73,6 +74,8 @@ const Home: NextPage = (props: any) => {
         {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
         {postsEnd && 'You have reached the end!'}
       </div>
+
+      <ScrollUpButton />
     </>
   )
 }
