@@ -6,6 +6,7 @@ import SidebarProvider from '../lib/SidebarProvider'
 import ThemeProvider from '../lib/ThemeProvider'
 import AuthProvider from '../lib/AuthProvider'
 import { Toaster } from 'react-hot-toast'
+import LoadingScreen from '../components/LoadingScreen'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             
             <div className='page'>
               <div className="page-content">
-                <Component {...pageProps} />
+                <LoadingScreen>
+                  <Component {...pageProps} />
+                </LoadingScreen>
               </div>
             </div>
 
