@@ -7,6 +7,7 @@ import { validatePassword, validatePasswordConfirm } from "../lib/validators"
 import Button from "./Button"
 import Textbox from "./Textbox"
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Loader from "./Loader"
 
 const SignupComponent = () => {
   const [email, setEmail] = useState('')
@@ -14,6 +15,8 @@ const SignupComponent = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
   const [emailState, setEmailState] = useState('neutral')
+
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter();
 
@@ -45,25 +48,33 @@ const SignupComponent = () => {
       && emailState === 'valid'
 
     if (valid) {
+      setLoading(true)
+      
       await createUserWithEmailAndPassword(auth, email, password)
       router.push('/profile/set')
+
+      setLoading(false)
     }
   }
 
   return (
     <div className="center">
-      <form onSubmit={signup}>
-        <Textbox placeholder="Email" type="email" icon value={email} onChange={setEmail} 
-        validationState={emailState} error_msg="Email is already being used." />
+      {loading ? (
+        <Loader show />
+      ) : (
+        <form onSubmit={signup}>
+          <Textbox placeholder="Email" type="email" icon value={email} onChange={setEmail} 
+          validationState={emailState} error_msg="Email is already being used." />
 
-        <Textbox placeholder="Password" type="password" icon value={password} onChange={setPassword} 
-        validationState={validatePassword(password)} />
+          <Textbox placeholder="Password" type="password" icon value={password} onChange={setPassword} 
+          validationState={validatePassword(password)} />
 
-        <Textbox placeholder="Confirm Password" type="password" icon value={passwordConfirm} onChange={setPasswordConfirm}
-        validationState={validatePasswordConfirm(password, passwordConfirm)}/>
+          <Textbox placeholder="Confirm Password" type="password" icon value={passwordConfirm} onChange={setPasswordConfirm}
+          validationState={validatePasswordConfirm(password, passwordConfirm)}/>
 
-        <Button color="green" onClick={signup}>Create Account</Button>
-      </form>
+          <Button color="green" onClick={signup}>Create Account</Button>
+        </form>
+      )}
     </div>
   )
 }

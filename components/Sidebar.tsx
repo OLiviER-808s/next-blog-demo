@@ -36,7 +36,7 @@ const Sidebar = () => {
   const setSidebar = useContext(SidebarUpdateContext)
 
   const router = useRouter()
-  router.events?.on('routeChangeComplete', () => setSidebar(false))
+  router.events?.on('routeChangeStart', () => setSidebar(false))
 
   const theme = useContext(ThemeUsedContext)
   const toggleTheme = useContext(ThemeUpdateContext)
