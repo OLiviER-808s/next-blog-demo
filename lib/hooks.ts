@@ -22,6 +22,8 @@ export const useMyEffect = (func: any, dep: Array<any>) => {
 
   useEffect(() => {
     if (first) setFirst(false)
-    else func()
+    else {
+      func()
+    }
   }, dep)
 }

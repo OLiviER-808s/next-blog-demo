@@ -59,6 +59,9 @@ const Home: NextPage = (props: any) => {
   useEffect(() => {
     setDisplayPosts(posts.filter((p: any) => p.title.toLocaleLowerCase().search(searchVal) > -1))
   }, [searchVal])
+  useEffect(() => {
+    setDisplayPosts(posts)
+  }, [posts])
 
   return (
     <>
