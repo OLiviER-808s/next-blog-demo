@@ -132,7 +132,7 @@ const EditProfile: NextPage = () => {
             <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
             <div className="btn-row">
-              <Button color="green" onClick={edit}>Edit Profile</Button>
+              <Button color="green" onClick={edit}>Confirm</Button>
               <Button secondary onClick={cancel}>Cancel</Button>
             </div>
           </Card>

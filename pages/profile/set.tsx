@@ -121,7 +121,7 @@ const SetProfile: NextPage = () => {
           <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
           <div className="btn-row">
-            <Button color="green" onClick={create}>Create Profile</Button>
+            <Button color="green" onClick={create}>Create</Button>
             <Button secondary onClick={skip}>Skip for Now</Button>
           </div>
         </Card>
