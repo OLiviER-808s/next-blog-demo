@@ -19,6 +19,7 @@ import { collection, limit, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 import SearchBar from './SearchBar'
 import debounce from 'lodash.debounce'
+import MobileAddButton from './MobileAddButton'
 
 const Toolbar = ({ setQuery, setSearch }: any) => {
   const theme = useContext(ThemeUsedContext)
@@ -113,6 +114,10 @@ const Toolbar = ({ setQuery, setSearch }: any) => {
           </IconButton>
         )}
       </>)}
+
+      {isHandheld && user && (
+        <MobileAddButton />
+      )}
     </div>
   )
 }

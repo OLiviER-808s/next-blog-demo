@@ -73,8 +73,6 @@ const Home: NextPage = (props: any) => {
         {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
         {postsEnd && 'You have reached the end!'}
       </div>
-
-      <MobileAddButton />
     </>
   )
 }

@@ -5,6 +5,4 @@
   border-radius: 7px;
   background-color: var(--primary-bg-color);
   border: 1px solid var(--border-color);
-  position: sticky;
-  top: 6.5em;
 }
