@@ -8,6 +8,7 @@ import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import CropImage from "../../components/CropImage";
+import Loader from "../../components/Loader";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
 import { setProfilePic } from "../../lib/auth";
@@ -18,6 +19,8 @@ const SetProfile: NextPage = () => {
   const [username, setUsername] = useState('')
   const [bio, setBio] = useState('')
   const [image, setImage] = useState('/default profile pic.jpg')
+
+  const [loading, setLoading] = useState(false)
 
   const [user] = useAuthState(auth)
   const router = useRouter()
@@ -42,6 +45,7 @@ const SetProfile: NextPage = () => {
 
   const create = async () => {
     if (usernameState === 'valid') {
+      setLoading(true)
       const ref = doc(db, `users/${user?.uid}`)
 
       let downloadUrl;
@@ -55,6 +59,7 @@ const SetProfile: NextPage = () => {
       })
 
       router.push('/')
+      setLoading(false)
     }
   }
 
@@ -75,6 +80,8 @@ const SetProfile: NextPage = () => {
   }
 
   const skip = async () => {
+    setLoading(true)
+
     let name: any = user?.email?.split('@')[0]
     for (let i = 0; i < 4; i++) {
       name += String(Math.floor(Math.random() * 10))
@@ -91,6 +98,7 @@ const SetProfile: NextPage = () => {
       })
 
       router.push('/')
+      setLoading(false)
     }
     else {
       skip()
@@ -104,26 +112,34 @@ const SetProfile: NextPage = () => {
           <h3 style={{'marginBottom': '0'}}>Your Account has been created!</h3>
           <p style={{'marginBottom': '2em'}}>Now it's time to customise your profile...</p>
 
-          <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
-            <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />
-            <Avatar src={image} width={3} />
-            <Button color="blue" onClick={() => ImageUploadRef ? ImageUploadRef.current.click() : null}>
-              Change Profile Pic
-            </Button>
-          </div>
+          {loading ? (
+            <div className="center">
+              <Loader show />
+            </div>
+          ) : (
+            <>
+              <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
+                <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />
+                <Avatar src={image} width={3} />
+                <Button color="blue" onClick={() => ImageUploadRef ? ImageUploadRef.current.click() : null}>
+                  Change Profile Pic
+                </Button>
+              </div>
 
-          {cropperImage && <CropImage src={cropperImage} onEnd={updateProfilePic}
-          onCancel={() => setCropperImage('')} />}
+              {cropperImage && <CropImage src={cropperImage} onEnd={updateProfilePic}
+              onCancel={() => setCropperImage('')} />}
 
-          <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
-          icon validationState={usernameState} error_msg="Username is already taken"/>
+              <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
+              icon validationState={usernameState} error_msg="Username is already taken"/>
 
-          <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
+              <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
-          <div className="btn-row">
-            <Button color="green" onClick={create}>Create</Button>
-            <Button secondary onClick={skip}>Skip for Now</Button>
-          </div>
+              <div className="btn-row">
+                <Button color="green" onClick={create}>Create</Button>
+                <Button secondary onClick={skip}>Skip for Now</Button>
+              </div>
+            </>
+          )}
         </Card>
       </div>
     </div>

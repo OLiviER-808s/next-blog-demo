@@ -7,6 +7,7 @@ import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import CropImage from "../../components/CropImage";
+import Loader from "../../components/Loader";
 import Textarea from "../../components/Textarea";
 import Textbox from "../../components/Textbox";
 import { setProfilePic } from "../../lib/auth";
@@ -21,6 +22,8 @@ const EditProfile: NextPage = () => {
   const [username, setUsername] = useState(user?.username || '')
   const [bio, setBio] = useState(user?.bio || '')
   const [image, setImage] = useState(user?.photo || '/default profile pic.jpg')
+
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
@@ -55,6 +58,8 @@ const EditProfile: NextPage = () => {
 
   const edit = async () => {
     if (usernameState !== 'error') {
+      setLoading(true)
+
       const batch = writeBatch(db)
 
       // updates profile
@@ -85,6 +90,7 @@ const EditProfile: NextPage = () => {
       batch.commit()
 
       router.push(`/profile/${username}`)
+      setLoading(false)
     }
   }
 
@@ -115,26 +121,34 @@ const EditProfile: NextPage = () => {
           <Card>
             <h2 style={{'marginBottom': '1.2em'}}>Edit Your Profile</h2>
 
-            <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
-              <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />
-              <Avatar src={image} width={3} />
-              <Button color="blue" onClick={() => ImageUploadRef ? ImageUploadRef.current.click() : null}>
-                Change Profile Pic
-              </Button>
-            </div>
+            {loading ? (
+              <div className="center">
+                <Loader show />
+              </div>
+            ) : (
+              <>
+                <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
+                  <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />
+                  <Avatar src={image} width={3} />
+                  <Button color="blue" onClick={() => ImageUploadRef ? ImageUploadRef.current.click() : null}>
+                    Change Profile Pic
+                  </Button>
+                </div>
 
-            {cropperImage && <CropImage src={cropperImage} onEnd={updateProfilePic}
-            onCancel={() => setCropperImage('')} />}
+                {cropperImage && <CropImage src={cropperImage} onEnd={updateProfilePic}
+                onCancel={() => setCropperImage('')} />}
 
-            <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
-            icon validationState={usernameState} error_msg="Username is already taken"/>
+                <Textbox type="text" placeholder="Username" value={username} onChange={setUsername} 
+                icon validationState={usernameState} error_msg="Username is already taken"/>
 
-            <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
+                <Textarea placeholder="Bio" height={6} value={bio} onChange={setBio}/>
 
-            <div className="btn-row">
-              <Button color="green" onClick={edit}>Confirm</Button>
-              <Button secondary onClick={cancel}>Cancel</Button>
-            </div>
+                <div className="btn-row">
+                  <Button color="green" onClick={edit}>Confirm</Button>
+                  <Button secondary onClick={cancel}>Cancel</Button>
+                </div>
+              </>
+            )}
           </Card>
         </div>
       </div>
