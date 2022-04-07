@@ -9,8 +9,5 @@
   position: fixed;
   bottom: 1.5em;
   right: 1.5em;
-}
-
-.btn :hover {
-  filter: brightness(1.2);
+  border: 1px solid var(--border-color);
 }
