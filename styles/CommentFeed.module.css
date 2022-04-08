@@ -12,8 +12,16 @@
 
 .row {
   display: flex;
-  align-items: center;
+}
+.row img {
+  cursor: pointer;
 }
 .row div {
-  cursor: pointer;
+  background-color: var(--primary-bg-color);
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
