@@ -27,6 +27,7 @@ const LoginComponent = () => {
       setLoading(false)
     } catch (err) {
       setError('Email or Password is incorrect')
+      setLoading(false)
     }
   }
 
@@ -46,7 +47,7 @@ const LoginComponent = () => {
 
           <div className="btn-row">
             <Button color="blue" onClick={login}>Login</Button>
-            <Button secondary>Forgot Passowrd?</Button>
+            <Button secondary>Forgot Password?</Button>
           </div>
         </form>
       )}

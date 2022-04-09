@@ -17,7 +17,7 @@ const Comment = ({ comment }: any) => {
 
   const deleteComment = async () => {
     const ref = doc(db, `comments/${comment.id}`)
-    deleteDoc(ref)
+    await deleteDoc(ref)
   }
 
   return (
@@ -32,7 +32,7 @@ const Comment = ({ comment }: any) => {
             <p>{ comment.content }</p>
           </div>
           <div className="spacer"></div>
-          {user.username === comment.authorname && (
+          {user && user.username === comment.authorname && (
             <div className={styles.delete}>
               <IconButton delete onClick={deleteComment}>
                 <DeleteIcon />
