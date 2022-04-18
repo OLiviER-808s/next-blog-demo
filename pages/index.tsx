@@ -1,8 +1,7 @@
-import { collection, getDocs, limit, onSnapshot, orderBy, query, startAfter, where } from 'firebase/firestore'
+import { collection, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import Button from '../components/Button'
-import MobileAddButton from '../components/MobileAddButton'
 import PostFeed from '../components/PostFeed'
 import ScrollUpButton from '../components/scrollUpButton'
 import Toolbar from '../components/Toolbar'
@@ -26,7 +25,7 @@ const Home: NextPage = (props: any) => {
   // all posts in query
   const [posts, setPosts] = useState(props.posts)
   // posts displayed on screen
-  const [displyPosts, setDisplayPosts] = useState(props.posts)
+  const [displayPosts, setDisplayPosts] = useState(props.posts)
 
   const changeFilter = async () => {
     const snap = await getDocs(q)
@@ -68,12 +67,14 @@ const Home: NextPage = (props: any) => {
     <>
       <Toolbar setQuery={updateQ} setSearch={setSearchVal}></Toolbar>
 
-      <PostFeed posts={displyPosts} />
+      <PostFeed posts={displayPosts} />
 
-      <div className="center">
-        {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
-        {postsEnd && 'You have reached the end!'}
-      </div>
+      {displayPosts.length > 0 && (
+        <div className="center">
+          {!postsEnd && <Button onClick={getMorePosts} color="blue">Load More</Button>}
+          {postsEnd && 'You have reached the end!'}
+        </div>
+      )}
 
       <ScrollUpButton />
     </>

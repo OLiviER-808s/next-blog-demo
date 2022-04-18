@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, query, setDoc, where, writeBatch } from "firebase/firestore";
+import { collection, doc, getDocs, query, where, writeBatch } from "firebase/firestore";
 import debounce from "lodash.debounce";
 import { NextPage } from "next";
 import { useRouter } from "next/router";

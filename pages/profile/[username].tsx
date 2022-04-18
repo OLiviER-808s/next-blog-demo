@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AccountSettings from "../../components/AccountSettings";
 import Avatar from "../../components/Avatar";
 import PostFeed from "../../components/PostFeed";
