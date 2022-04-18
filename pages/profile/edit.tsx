@@ -72,6 +72,8 @@ const EditProfile: NextPage = () => {
         email: user?.email,
         photo: downloadUrl
       })
+      batch.delete(doc(db, `usernames/${user.username}`))
+      batch.set(doc(db, `usernames/${username}`), { uid: user.uid })
 
       // updates associated posts and comments
       const posts_q = query(collection(db, 'posts'), where('authorname', '==', user.username))
