@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
 export const validatePasswordConfirm = (password: string, confirmation: string) => {
@@ -16,10 +16,9 @@ export const validateUsername = async (username: string) => {
     return 'neutral'
   }
   else {
-    const ref = collection(db, 'users')
-    const q = query(ref, where('username', '==', username))
-    const snap = await getDocs(q)
-    const exists = snap.size > 0
+    const ref = doc(db, `usernames/${username}`)
+    const d = await getDoc(ref)
+    const exists = d.exists()
 
     return exists ? 'error' : 'valid'
   }

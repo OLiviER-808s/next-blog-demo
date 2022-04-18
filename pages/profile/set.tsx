@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, writeBatch } from "firebase/firestore";
 import debounce from "lodash.debounce";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -46,17 +46,22 @@ const SetProfile: NextPage = () => {
   const create = async () => {
     if (usernameState === 'valid') {
       setLoading(true)
-      const ref = doc(db, `users/${user?.uid}`)
+      const batch = writeBatch(db)
+      const userRef = doc(db, `users/${user?.uid}`)
+      const usernameRef = doc(db, `usernames/${username}`)
 
       let downloadUrl;
       if (image !== '/default profile pic.jpg') downloadUrl = await setProfilePic(image, user?.uid)
 
-      await setDoc(ref, {
+      batch.set(userRef, {
         username: username,
         bio: bio,
         email: user?.email,
-        photo: image
+        photo: downloadUrl || '/default profile pic.jpg'
       })
+      batch.set(usernameRef, { uid: user?.uid })
+
+      await batch.commit()
 
       router.push('/')
       setLoading(false)
@@ -90,12 +95,18 @@ const SetProfile: NextPage = () => {
     const valid = await validateUsername(name)
 
     if (valid === 'valid') {
-      const ref = doc(db, `users/${user?.uid}`)
-      await setDoc(ref, {
+      const batch = writeBatch(db)
+      const userRef = doc(db, `users/${user?.uid}`)
+      const usernameRef = doc(db, `usernames/${name}`)
+
+      batch.set(userRef, {
         username: name,
         photo: '/default profile pic.jpg',
         email: user?.email
       })
+      batch.set(usernameRef, { uid: user?.uid })
+
+      await batch.commit()
 
       router.push('/')
       setLoading(false)
