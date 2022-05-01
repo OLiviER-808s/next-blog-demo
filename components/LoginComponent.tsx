@@ -47,7 +47,7 @@ const LoginComponent = () => {
 
           <div className="btn-row">
             <Button color="blue" onClick={login}>Login</Button>
-            <Button secondary>Forgot Password?</Button>
+            <Button secondary onClick={() => router.push('/forgot_password')}>Forgot Password?</Button>
           </div>
         </form>
       )}

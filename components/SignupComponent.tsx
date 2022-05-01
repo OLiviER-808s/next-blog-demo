@@ -2,11 +2,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import debounce from "lodash.debounce"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
-import { auth, db } from "../lib/firebase"
-import { validatePassword, validatePasswordConfirm } from "../lib/validators"
+import { auth } from "../lib/firebase"
+import { validateEmail, validatePassword, validatePasswordConfirm } from "../lib/validators"
 import Button from "./Button"
 import Textbox from "./Textbox"
-import { collection, getDocs, query, where } from "firebase/firestore";
 import Loader from "./Loader"
 
 const SignupComponent = () => {
@@ -26,18 +25,8 @@ const SignupComponent = () => {
 
   const checkEmail = useCallback(
     debounce(async (email: string) => {
-      const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-      if (!email.match(re)) {
-        setEmailState('neutral')
-      }
-      else {
-        const ref = collection(db, 'users')
-        const q = query(ref, where('email', '==', email))
-        const snap = await getDocs(q)
-        const exists = snap.size > 0
-        setEmailState(exists ? 'error' : 'valid')
-      }
+      const state = await validateEmail(email)
+      setEmailState(state)
     }, 500),
     []
   )

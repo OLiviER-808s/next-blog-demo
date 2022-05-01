@@ -1,6 +1,21 @@
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
+export const validateEmail = async (email: string) => {
+  const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+  if (!email.match(re)) {
+    return 'neutral'
+  }
+  else {
+    const ref = collection(db, 'users')
+    const q = query(ref, where('email', '==', email))
+    const snap = await getDocs(q)
+    const exists = snap.size > 0
+    return exists ? 'error' : 'valid'
+  }
+}
+
 export const validatePasswordConfirm = (password: string, confirmation: string) => {
   return password === confirmation && password.length > 6 ? 'valid' : 'neutral'
 }
