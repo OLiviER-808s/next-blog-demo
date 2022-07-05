@@ -12,7 +12,7 @@ const About: NextPage = () => {
         This app was made by 
         following <a className="link" href="https://fireship.io/courses/react-next-firebase/">this course</a> by <a className="link" href="https://twitter.com/fireship_dev">@fireship_dev</a> however
         I did make quite a lot of changes to challenge myself and set my site apart. 
-        For comparison, <a className="link" href="#">this</a> is the site from the course. I added many extra features such as:
+        For comparison, <a className="link" href="https://next.fireship.io/">this</a> is the site from the course. I added many extra features such as:
       </p>
 
       <ul className={styles.text}>
