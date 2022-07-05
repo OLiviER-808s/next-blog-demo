@@ -90,3 +90,9 @@ svg {
   color: rgb(235, 23, 23);
   max-width: 250px;
 }
+
+.link {
+  text-decoration: underline;
+  color: rgb(60, 78, 245);
+  cursor: pointer;
+}

@@ -16,7 +16,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         <h1>
-          <Link href="/">Next.js Demo</Link>
+          <Link href="/">Blog Demo</Link>
         </h1>
 
         <div className="spacer"></div>
