@@ -5,4 +5,5 @@ export interface Comment {
   postID?: string;
   createdAt?: any;
   photo?: string;
+  uid?: string;
 }

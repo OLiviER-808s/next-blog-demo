@@ -51,6 +51,7 @@ const AddComment = (props: any) => {
         authorname: user.username,
         photo: user.photo,
         postID: id,
+        uid: user.uid,
         createdAt: timestamp()
       }
 

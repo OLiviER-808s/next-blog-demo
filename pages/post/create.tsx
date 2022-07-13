@@ -39,6 +39,7 @@ const CreatePage: NextPage = () => {
         title: title,
         state: state,
         authorname: user.username,
+        uid: user.uid,
         createdAt: timestamp()
       }
 

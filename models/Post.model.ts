@@ -7,4 +7,5 @@ export default interface Post {
   dislikeCount?: number
   state?: 'posted' | 'draft'
   authorname?: string
+  uid?: string
 }

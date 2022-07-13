@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db, postToJSON, timestamp } from "../../../lib/firebase";
+import { db, postToJSON } from "../../../lib/firebase";
 import Button from "../../../components/Button";
 import Card from "../../../components/Card";
 import Editor from "../../../components/Editor";
@@ -34,8 +34,7 @@ const EditPost: NextPage = ({ post }: any) => {
       const data: any = {
         content: content ? String(content) : ' ',
         title: title,
-        state: post.state,
-        authorname: user.username,
+        state: post.state
       }
 
       const ref = doc(db, `posts/${post.id}`)
