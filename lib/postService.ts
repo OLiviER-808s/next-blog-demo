@@ -7,7 +7,12 @@ export const usePostDelete = (id: string) => {
 
   return async () => {
     const ref = doc(db, `posts/${id}`)
-    await deleteDoc(ref)
+    
+    try {
+      await deleteDoc(ref)
+    } catch (error) {
+      
+    }
 
     if (router.pathname === '/post/[id]') router.push('/')
   }

@@ -1,10 +1,10 @@
 import { NextPage } from "next";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AccountSettings from "../../components/AccountSettings";
 import Avatar from "../../components/Avatar";
 import PostFeed from "../../components/PostFeed";
 import { Tab, TabGroup } from "../../components/Tabs";
-import { getUserPosts, getUserWithUsername } from "../../lib/auth";
+import { getUserDrafts, getUserPosts, getUserWithUsername } from "../../lib/auth";
 import { AuthContext } from "../../lib/AuthProvider";
 import { postToJSON } from "../../lib/firebase";
 
@@ -12,6 +12,19 @@ import { postToJSON } from "../../lib/firebase";
 const ProfilePage: NextPage = ({ author, posts }: any) => {
   const user = useContext(AuthContext)
   const isUserPage = author.username === user?.username || false
+
+  const [drafts, setDrafts]: any = useState([])
+
+  useEffect(() => {
+    if (user) {
+      getDrafts()
+    }
+  }, [user])
+
+  const getDrafts = async () => {
+    const d = await getUserDrafts(user.uid)
+    setDrafts(d)
+  }
 
   return (
     <>
@@ -27,17 +40,17 @@ const ProfilePage: NextPage = ({ author, posts }: any) => {
         {isUserPage && (
           <TabGroup name="tabs">
             <Tab id="posts" label="My Posts">
-              <PostFeed posts={posts.filter((p: any) => p.state === 'posted')}></PostFeed>
+              <PostFeed posts={posts}></PostFeed>
             </Tab>
             <Tab id="drafts" label="My Drafts">
-              <PostFeed posts={posts.filter((p: any) => p.state === 'draft')}></PostFeed>
+              <PostFeed posts={drafts}></PostFeed>
             </Tab>
             <Tab id="settings" label="Settings">
-              <AccountSettings />
+              <AccountSettings username={author.username} />
             </Tab>
           </TabGroup>
         )}
-        {!isUserPage && <PostFeed posts={posts.filter((p: any) => p.state === 'posted')} />}
+        {!isUserPage && <PostFeed posts={posts} />}
       </div>
     </>
   )

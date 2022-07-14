@@ -1,0 +1,115 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      match /posts/{postId} {
+      	allow read: if resource.data.state == "posted" || resource.data.uid == request.auth.uid;
+        allow create: if canCreatePost();
+        allow update: if canUpdatePost() || canIncrementLikes(postId) || canIncrementDislikes(postId);
+        allow delete: if resource.data.uid == request.auth.uid;
+      }
+      
+      match /posts/{postId}/likes/{likeId} {
+      	allow read;
+        allow write: if request.auth.uid == likeId;
+      }
+      
+      match /posts/{postId}/dislikes/{dislikeId} {
+      	allow read;
+        allow write: if request.auth.uid == dislikeId;
+      }
+      
+      match /comments/{commentId} {
+      	allow read;
+        allow write: if canCreateComment();
+        allow delete: if resource.data.uid == request.auth.uid;
+      }
+      
+      match /users/{userId} {
+      	allow read;
+        allow create, update: if isValidUser(userId);
+        allow delete: if userId == request.auth.uid;
+      }
+      
+      match /usernames/{username} {
+      	allow read;
+        allow create: if isValidUsername(username);
+        allow delete: if resource.data.uid == request.auth.uid;
+      }
+      
+      function canUpdatePost() {
+      	let isOwner = request.auth.uid == request.resource.data.uid;
+        let publishing = request.resource.data.state == "posted" && resource.data.state == "draft";
+        let doesNotUpdateForbidden = !request.resource.data.diff(resource.data).affectedKeys().hasAny(['uid', 'likeCount', 'dislikeCount', (publishing ? "" : "createdAt")]);
+        
+        return doesNotUpdateForbidden && isOwner;
+      }
+      
+      function canCreatePost() {
+      	let isOwner = request.auth.uid == request.resource.data.uid;
+        let isNow = request.time == request.resource.data.createdAt;
+        let noInteraction = request.resource.data.likeCount == 0 && request.resource.data.dislikeCount == 0;
+        let username = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username;
+        let usernameMatches = username == request.resource.data.authorname;
+
+      	return isOwner && isNow && noInteraction && usernameMatches;
+      }
+      
+      function canCreateComment() {
+      	let isOwner = request.auth.uid == request.resource.data.uid;
+        let isNow = request.time == request.resource.data.createdAt;
+        
+        let username = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username;
+        let usernameMatches = username == request.resource.data.authorname;
+        
+        return isOwner && isNow && usernameMatches;
+      }
+      
+      function isValidUser(userId) {
+        let isOwner = request.auth.uid == userId;
+      	let username = request.resource.data.username;
+        let createdValidUsername = existsAfter(/databases/$(database)/documents/usernames/$(username));
+        
+        return isOwner && createdValidUsername;
+      }
+      
+      function isValidUsername(username) {
+				let isOwner = request.auth.uid == request.resource.data.uid;
+        let isValidLength = username.size() >= 3 && username.size() <= 25;
+        let isValidUserDoc = getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.username == username;
+        
+        return isOwner && isValidLength && isValidUserDoc;     
+      }
+      
+      function canIncrementLikes(postId) {
+      	let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likeCount']);
+        let currentUser = request.auth.uid;
+        let docExistsAfter = existsAfter(/databases/$(database)/documents/posts/$(postId)/likes/$(currentUser));
+        let docExists = exists(/databases/$(database)/documents/posts/$(postId)/likes/$(currentUser));
+        
+        let docAdded = !docExists && docExistsAfter;
+        let docRemoved = docExists && !docExistsAfter;
+        
+        let countChange = request.resource.data.likeCount - resource.data.likeCount;
+        let validChange = countChange == 1 || countChange == -1;
+        
+        return hasValidFields && validChange && ( countChange == 1 ? docAdded : docRemoved );
+      }
+      
+      function canIncrementDislikes(postId) {
+      	let hasValidFields = request.resource.data.diff(resource.data).affectedKeys().hasOnly(['dislikeCount']);
+        let currentUser = request.auth.uid;
+        let docExistsAfter = existsAfter(/databases/$(database)/documents/posts/$(postId)/dislikes/$(currentUser));
+        let docExists = exists(/databases/$(database)/documents/posts/$(postId)/dislikes/$(currentUser));
+        
+        let docAdded = !docExists && docExistsAfter;
+        let docRemoved = docExists && !docExistsAfter;
+        
+        let countChange = request.resource.data.dislikeCount - resource.data.dislikeCount;
+        let validChange = countChange == 1 || countChange == -1;
+        
+        return hasValidFields && validChange && ( countChange == 1 ? docAdded : docRemoved );
+      }
+    }
+  }
+}

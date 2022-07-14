@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { deleteClick } from "../lib/toast";
 
-const AccountSettings = () => {
+const AccountSettings = ({ username }: any) => {
   const logout = useLogout()
 
   const theme = useContext(ThemeUsedContext)
@@ -22,33 +22,38 @@ const AccountSettings = () => {
   const editProfile = () => router.push(`/profile/edit`)
 
   const [fill, setFill] = useState(0)
-  const deleteAccount = useAccountDelete()
+  const deleteAccount = useAccountDelete(username)
 
   return (
-    <div className="center">
-      <div className="btn-column">
-        <Button color="grey" onClick={logout}>
-          <LogoutIcon />
-          Logout
-        </Button>
-        <Button color="grey" onClick={toggleTheme}>
-          {theme === 'light' ? <MoonIcon/> : <SunIcon />}
-          Switch Theme
-        </Button>
-        <Button color="green" onClick={editProfile}>
-          <ProfileIcon />
-          Edit Profile
-        </Button>
-        <HoldButton speed={50} setFill={setFill} onEnd={deleteAccount} onStart={deleteClick}>
-          <Button color="red">
-            <DeleteIcon />
-            Delete Account
+    <>
+      <div className="center">
+        <div className="btn-column">
+          <Button color="grey" onClick={logout}>
+            <LogoutIcon />
+            Logout
           </Button>
-        </HoldButton>
+          <Button color="grey" onClick={toggleTheme}>
+            {theme === 'light' ? <MoonIcon/> : <SunIcon />}
+            Switch Theme
+          </Button>
+          <Button color="green" onClick={editProfile}>
+            <ProfileIcon />
+            Edit Profile
+          </Button>
+          <HoldButton speed={50} setFill={setFill} onEnd={deleteAccount} onStart={deleteClick}>
+            <Button color="red">
+              <DeleteIcon />
+              Delete Account
+            </Button>
+          </HoldButton>
+        </div>
+
       </div>
 
-      <DeleteBar progress={fill}/>
-    </div>
+      <div className="center">
+        <DeleteBar progress={fill}/>
+      </div>
+    </>
   )
 }
 
