@@ -38,7 +38,7 @@ const Post = ({ post }: any) => {
 
         <div className={styles.row}>
           <h2 className={styles.title}>
-            <Link href={`/post/${post.id}`}>{ post.title }</Link>
+            <Link href={post.state === 'posted' ? `/post/${post.id}` : `/post/edit/${post.id}`}>{ post.title }</Link>
           </h2>
 
           <div className="spacer"></div>

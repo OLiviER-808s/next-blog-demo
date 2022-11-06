@@ -9,15 +9,20 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../../lib/AuthProvider";
 import AuthCheck from "../../../lib/AuthCheck";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import Post from "../../../models/Post.model";
 
-const EditPost: NextPage = ({ post }: any) => {
-  const [title, setTitle] = useState(post.title)
+const EditPost: NextPage = ({ id }: any) => {
+  const [title, setTitle] = useState('')
   const editor: any = useRef(null)
 
   const [error, setError] = useState(false)
 
   const user = useContext(AuthContext)
   const router = useRouter()
+
+  const [postData] = useDocumentData(doc(db, `posts/${id}`))
+  const post: Post = { ...postData, id: id }
 
   const updateTitle = (val: string) => {
     setTitle(val)
@@ -45,8 +50,8 @@ const EditPost: NextPage = ({ post }: any) => {
   }
 
   useEffect(() => {
-    editor.current.querySelector('#content').innerHTML = post.content
-  }, [])
+    if (post) editor.current.querySelector('#content').innerHTML = post.content
+  }, [post])
 
   return (
     <AuthCheck>
@@ -61,7 +66,7 @@ const EditPost: NextPage = ({ post }: any) => {
 
           <div className="reverse-btn-row">
             <div className="spacer"></div>
-            <Button secondary onClick={() => router.push('/')}>Cancel</Button>
+            <Button secondary onClick={() => router.back()}>Cancel</Button>
             <Button color="green" onClick={() => editPost()}>Edit Post</Button>
           </div>
         </Card>
@@ -73,15 +78,9 @@ const EditPost: NextPage = ({ post }: any) => {
 export async function getServerSideProps({ query }: any) {
   const { id } = query
 
-  const ref = doc(db, `posts/${id}`)
-  const d = await getDoc(ref)
-  const post = { ...d.data(), id: d.id }
-
-  const post_prop = postToJSON(post)
-
   return {
     props: {
-      post: post_prop
+      id: id
     }
   }
 }
