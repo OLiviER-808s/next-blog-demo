@@ -26,7 +26,7 @@ const About: NextPage = () => {
       </ul>
 
       <p className={styles.text}>
-        You can also look at my <a className="link" href="#">portfolio</a> for more demo projects. Find my social media below:
+        You can also look at my <a className="link" href="#">portfolio</a> for more demo projects.
       </p>
     </div>
   )
