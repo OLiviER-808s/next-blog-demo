@@ -7,7 +7,7 @@ const About: NextPage = () => {
       <h2>Welcome to my Blog Demo!</h2>
 
       <p className={styles.text}>
-        This is an app I made as a demo project to showcase on my <a className="link" href="#">portfolio</a> and 
+        This is an app I made as a demo project to showcase on my <a className="link" href="https://www.upwork.com/freelancers/~01dd09c3a20dad7abc">portfolio</a> and 
         as a tool to improve my web development skills. <br/><br/>
         This app was made by 
         following <a className="link" href="https://fireship.io/courses/react-next-firebase/">this course</a> by <a className="link" href="https://twitter.com/fireship_dev">@fireship_dev</a> however
@@ -26,7 +26,7 @@ const About: NextPage = () => {
       </ul>
 
       <p className={styles.text}>
-        You can also look at my <a className="link" href="#">portfolio</a> for more demo projects.
+        You can also look at my <a className="link" href="https://www.upwork.com/freelancers/~01dd09c3a20dad7abc">portfolio</a> for more demo projects.
       </p>
     </div>
   )
