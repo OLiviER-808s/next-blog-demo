@@ -7,6 +7,7 @@ import ThemeProvider from '../lib/ThemeProvider'
 import AuthProvider from '../lib/AuthProvider'
 import { Toaster } from 'react-hot-toast'
 import LoadingScreen from '../components/LoadingScreen'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +15,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <ThemeProvider>
           <SidebarProvider>
+            <Head>
+              <title>Blog Demo</title>
+            </Head>
+
             <Header></Header>
             <Sidebar></Sidebar>
             
