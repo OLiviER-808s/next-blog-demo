@@ -10,6 +10,7 @@ import { useContext } from "react"
 import { AuthContext } from "../lib/AuthProvider"
 import { deleteDoc, doc } from "firebase/firestore"
 import { db } from "../lib/firebase"
+import { CommentDeletedToast } from "../lib/toast"
 
 const Comment = ({ comment }: any) => {
   const router = useRouter()
@@ -18,6 +19,8 @@ const Comment = ({ comment }: any) => {
   const deleteComment = async () => {
     const ref = doc(db, `comments/${comment.id}`)
     await deleteDoc(ref)
+
+    CommentDeletedToast()
   }
 
   return (

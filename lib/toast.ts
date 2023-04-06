@@ -12,7 +12,42 @@ export const deleteClick = () => toast('Hold the button to delete', {
   duration: 1100
 })
 
-export const ResetEmailToast = () => toast('✅ Reset Email Sent Successfully', {
+export const ResetEmailToast = () => toast('✅ Reset email sent', {
   style: style,
-  duration: 1000
+  duration: 1500
+})
+
+export const PostCreatedToast = () => toast('✅ Post created', {
+  style: style,
+  duration: 1500
+})
+
+export const PostDraftedToast = () => toast('✅ Draft created', {
+  style: style,
+  duration: 1500
+})
+
+export const CommentAddedToast = () => toast('✅ Comment added', {
+  style: style,
+  duration: 1500
+})
+
+export const CommentDeletedToast = () => toast('🗑️ Comment deleted', {
+  style: style,
+  duration: 1500
+})
+
+export const PostDeletedToast = () => toast('🗑️ Post deleted', {
+  style: style,
+  duration: 1500
+})
+
+export const PostEditedToast = () => toast('✏️ Post edited', {
+  style: style,
+  duration: 1500
+})
+
+export const ProfileEditedToast = () => toast('✏️ Profile edited', {
+  style: style,
+  duration: 1500
 })

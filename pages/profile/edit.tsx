@@ -15,6 +15,7 @@ import AuthCheck from "../../lib/AuthCheck";
 import { AuthContext } from "../../lib/AuthProvider";
 import { db } from "../../lib/firebase";
 import { validateUsername } from "../../lib/validators";
+import { ProfileEditedToast } from "../../lib/toast";
 
 const EditProfile: NextPage = () => {
   const user = useContext(AuthContext) || null
@@ -93,6 +94,8 @@ const EditProfile: NextPage = () => {
 
       router.push(`/profile/${username}`)
       setLoading(false)
+
+      ProfileEditedToast()
     }
   }
 

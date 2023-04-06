@@ -11,6 +11,7 @@ import { AuthContext } from "../../../lib/AuthProvider";
 import AuthCheck from "../../../lib/AuthCheck";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import Post from "../../../models/Post.model";
+import { PostEditedToast } from "../../../lib/toast";
 
 const EditPost: NextPage = ({ id }: any) => {
   const [title, setTitle] = useState('')
@@ -46,6 +47,7 @@ const EditPost: NextPage = ({ id }: any) => {
       await updateDoc(ref, data)
 
       router.push('/')
+      PostEditedToast()
     }
   }
 

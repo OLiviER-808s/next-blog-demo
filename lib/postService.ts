@@ -1,20 +1,18 @@
 import { deleteDoc, doc, updateDoc } from "firebase/firestore"
 import { useRouter } from "next/router"
 import { db, timestamp } from "./firebase"
+import { PostDeletedToast } from "./toast"
 
 export const usePostDelete = (id: string) => {
   const router = useRouter()
 
   return async () => {
     const ref = doc(db, `posts/${id}`)
-    
-    try {
-      await deleteDoc(ref)
-    } catch (error) {
-      
-    }
+    await deleteDoc(ref)
 
     if (router.pathname === '/post/[id]') router.push('/')
+
+    PostDeletedToast()
   }
 }
 

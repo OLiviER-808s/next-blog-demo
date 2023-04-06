@@ -9,6 +9,7 @@ import styles from '../styles/AddComment.module.css'
 import Button from './Button'
 import Card from './Card'
 import Textarea from './Textarea'
+import { CommentAddedToast } from '../lib/toast'
 
 const slideUp = {
   hidden: {
@@ -58,6 +59,9 @@ const AddComment = (props: any) => {
       addDoc(ref, data)
     }
     props.close()
+    setComment('')
+
+    CommentAddedToast()
   }
 
   return (
