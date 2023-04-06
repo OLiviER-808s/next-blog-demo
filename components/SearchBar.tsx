@@ -6,6 +6,12 @@ import IconButton from './IconButton'
 const SearchBar = ({ value, onChange }: any) => {
   const [bar, toggleBar] = useState(false)
 
+  const unfocus = (e: any) => {
+    if (!e.target.value) {
+      toggleBar(false)
+    }
+  }
+
   return (
     <>
       {!bar && 
@@ -21,6 +27,7 @@ const SearchBar = ({ value, onChange }: any) => {
         className={styles.bar} 
         placeholder="Search Posts..." 
         value={value}
+        onBlur={unfocus}
         onChange={(e) => onChange(e.target.value)} />
       </form>
       }
