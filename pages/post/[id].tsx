@@ -46,6 +46,9 @@ const PostPage: NextPage = (props: any) => {
   const dislikeRef = doc(db, `posts/${post.id}/dislikes/${uid}`)
   const [dislikeDoc] = useDocument(dislikeRef)
 
+  const liked = likeDoc?.exists()
+  const disliked = dislikeDoc?.exists()
+
   const [fill, setFill] = useState(0)
   const deletePost = usePostDelete(props.post.id)
 
@@ -53,12 +56,13 @@ const PostPage: NextPage = (props: any) => {
     const ref = doc(db, `posts/${post.id}`)
     const batch = writeBatch(db)
     
-    batch.update(ref, { likeCount: increment(1) })
-    batch.set(likeRef, { uid: user.uid })
-    if (dislikeDoc?.exists()) {
+    if (disliked) {
       batch.update(ref, { dislikeCount: increment(-1) })
       batch.delete(dislikeRef)
     }
+    
+    batch.update(ref, { likeCount: increment(1) })
+    batch.set(likeRef, { uid: user.uid })
 
     await batch.commit()
   }
@@ -76,12 +80,13 @@ const PostPage: NextPage = (props: any) => {
     const ref = doc(db, `posts/${post.id}`)
     const batch = writeBatch(db)
 
-    batch.update(ref, { dislikeCount: increment(1) })
-    batch.set(dislikeRef, { uid: user.uid })
-    if (likeDoc?.exists()) {
+    if (liked) {
       batch.update(ref, { likeCount: increment(-1) })
       batch.delete(likeRef)
     }
+    
+    batch.update(ref, { dislikeCount: increment(1) })
+    batch.set(dislikeRef, { uid: user.uid })
 
     await batch.commit()
   }
@@ -118,13 +123,13 @@ const PostPage: NextPage = (props: any) => {
     <div className={styles.page}>
       {!isHandheld && user && <div className={styles.btn_column}>
         <div className={styles.btns}>
-          <IconButton selected={likeDoc?.exists()}
-          onClick={() => likeDoc?.exists() ? removeLike() : addLike()}>
+          <IconButton selected={liked}
+          onClick={() => liked ? removeLike() : addLike()}>
             <LikeIcon />
           </IconButton>
           <p>{ post.likeCount }</p>
-          <IconButton selected={dislikeDoc?.exists()}
-          onClick={() => dislikeDoc?.exists() ? removeDislike() : addDislike()}>
+          <IconButton selected={disliked}
+          onClick={() => disliked ? removeDislike() : addDislike()}>
             <DislikeIcon />
           </IconButton>
           <p>{ post.dislikeCount }</p>
