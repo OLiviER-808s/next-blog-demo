@@ -77,18 +77,21 @@ const Toolbar = ({ setQuery, setSearch }: any) => {
     <div className={styles.bar}>
       <SearchBar value={searchText} onChange={setText} />
 
-      <IconButton onClick={() => setDropdown(!dropdown)}>
-        <SortIcon />
+      <div>
+        <IconButton onClick={() => setDropdown(!dropdown)}>
+          <SortIcon />
+        </IconButton>
+
         <Dropdown show={dropdown} setShow={setDropdown} closeOnClick>
-          <h3 style={{margin: '0.5em'}}>Sort By: </h3>
-          <List clickable>
+          <h3 style={{margin: '0.5em', textAlign: 'center'}}>Sort By: </h3>
+          <List clickable center>
             <ListItem onClick={() => applyFilter('newest')}>Newest</ListItem>
             <ListItem onClick={() => applyFilter('oldest')}>Oldest</ListItem>
             <ListItem onClick={() => applyFilter('likes')}>Most Liked</ListItem>
             <ListItem onClick={() => applyFilter('dislikes')}>Most Disliked</ListItem>
           </List>
         </Dropdown>
-      </IconButton>
+      </div>
 
       <div className="spacer"></div>
 
