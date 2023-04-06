@@ -1,6 +1,6 @@
 import { NextPage } from "next";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db, postToJSON } from "../../../lib/firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../lib/firebase";
 import Button from "../../../components/Button";
 import Card from "../../../components/Card";
 import Editor from "../../../components/Editor";
@@ -50,7 +50,10 @@ const EditPost: NextPage = ({ id }: any) => {
   }
 
   useEffect(() => {
-    if (post) editor.current.querySelector('#content').innerHTML = post.content
+    if (post) {
+      setTitle(post.title || '')
+      editor.current.querySelector('#content').innerHTML = post.content
+    }
   }, [post])
 
   return (

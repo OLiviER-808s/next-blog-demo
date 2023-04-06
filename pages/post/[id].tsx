@@ -33,10 +33,11 @@ const PostPage: NextPage = (props: any) => {
   const router = useRouter()
   const user = useContext(AuthContext)
   const uid = auth.currentUser?.uid
-  const [isUserPost, setIsUserPost] = useState(false);
 
   const [postData] = useDocumentData(doc(db, `posts/${props.post.id}`))
   const post: Post = { ...postData, id: props.post.id } || props.post
+
+  const isUserPost = post.authorname === user?.username
 
   const [commentBox, setCommentBox] = useState(false)
   const [comments, setComments] = useState([])
@@ -104,9 +105,6 @@ const PostPage: NextPage = (props: any) => {
     // sets article content
     contentRef.current.innerHTML = props.post.content
 
-    // checks if post belongs to user
-    setIsUserPost(post.authorname === user?.username)
-
     // sets comments
     const postID = router.query.id
     const ref = collection(db, 'comments')
@@ -139,7 +137,7 @@ const PostPage: NextPage = (props: any) => {
           </IconButton>
           <p>{ comments.length }</p>
           {isUserPost && <>
-            <IconButton edit>
+            <IconButton edit onClick={() => router.push(`/post/edit/${post.id}`)}>
               <EditIcon />
             </IconButton>
             <HoldButton speed={20} setFill={setFill} onEnd={deletePost} onStart={deleteClick}>
@@ -183,7 +181,7 @@ const PostPage: NextPage = (props: any) => {
           {isUserPost && (
             <>
               <div>
-                <IconButton edit>
+                <IconButton edit onClick={() => router.push(`/post/edit/${post.id}`)}>
                   <MobileEditIcon />
                 </IconButton>
               </div>
