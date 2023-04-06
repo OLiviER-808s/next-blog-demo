@@ -131,9 +131,12 @@ const SetProfile: NextPage = () => {
             <>
               <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
                 <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />
-                <Avatar src={image} width={3} />
+                <div style={{'marginRight': '1em'}}>
+                  <Avatar src={image} width={3} />
+                </div>
+
                 <Button color="blue" onClick={() => ImageUploadRef ? ImageUploadRef.current.click() : null}>
-                  Change Profile Pic
+                  Set Profile Picture
                 </Button>
               </div>
 

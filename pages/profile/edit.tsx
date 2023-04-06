@@ -96,10 +96,6 @@ const EditProfile: NextPage = () => {
     }
   }
 
-  const cancel = () => {
-    router.push(`/profile/${user.username}`)
-  }
-
   const uploadImage = (e: any) => {
     if (e.target.files.length === 0) return;
 
@@ -131,7 +127,10 @@ const EditProfile: NextPage = () => {
               <>
                 <div style={{'marginBottom': '1.5em', 'display': 'flex'}}>
                   <input type="file" hidden onChange={uploadImage} ref={ImageUploadRef} />
-                  <Avatar src={image} width={3} />
+                  <div style={{'marginRight': '1em'}}>
+                    <Avatar src={image} width={3} />
+                  </div>
+
                   <Button color="blue" onClick={() => ImageUploadRef ? ImageUploadRef.current.click() : null}>
                     Change Profile Pic
                   </Button>
@@ -147,7 +146,7 @@ const EditProfile: NextPage = () => {
 
                 <div className="btn-row">
                   <Button color="green" onClick={edit}>Confirm</Button>
-                  <Button secondary onClick={cancel}>Cancel</Button>
+                  <Button secondary onClick={() => router.back()}>Cancel</Button>
                 </div>
               </>
             )}

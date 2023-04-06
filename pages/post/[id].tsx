@@ -126,7 +126,7 @@ const PostPage: NextPage = (props: any) => {
             <LikeIcon />
           </IconButton>
           <p>{ post.likeCount }</p>
-          <IconButton selected={disliked}
+          <IconButton delete={disliked}
           onClick={() => disliked ? removeDislike() : addDislike()}>
             <DislikeIcon />
           </IconButton>
