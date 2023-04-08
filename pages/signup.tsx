@@ -10,6 +10,7 @@ import { Tab, TabGroup } from "../components/Tabs";
 import { auth, db, googleProvider } from "../lib/firebase";
 import { validateUsername } from "../lib/validators";
 import GoogleIcon from '../public/icons/google.svg';
+import AuthCheck from "../lib/AuthCheck";
 
 const Signup: NextPage = () => {
   const router = useRouter()
@@ -53,30 +54,32 @@ const Signup: NextPage = () => {
   }
 
   return (
-    <div className="center">
-      <div>
-        <div className="center" style={{'marginBottom': '2em'}}>
-          <Button color="basic" onClick={loginWithGoogle}>
-            <GoogleIcon />
-            Login with Google
-          </Button>
-        </div>
+    <AuthCheck reverse>
+      <div className="center">
+        <div>
+          <div className="center" style={{'marginBottom': '2em'}}>
+            <Button color="basic" onClick={loginWithGoogle}>
+              <GoogleIcon />
+              Login with Google
+            </Button>
+          </div>
 
 
-        <div style={{'width': '100%', 'maxWidth': '430px'}}>
-          <Card>
-            <TabGroup name="tabs">
-              <Tab id='signup' label="Signup">
-                <SignupComponent />
-              </Tab>
-              <Tab id="login" label="Login">
-                <LoginComponent />
-              </Tab>
-            </TabGroup>
-          </Card>
+          <div style={{'width': '100%', 'maxWidth': '430px'}}>
+            <Card>
+              <TabGroup name="tabs">
+                <Tab id='signup' label="Signup">
+                  <SignupComponent />
+                </Tab>
+                <Tab id="login" label="Login">
+                  <LoginComponent />
+                </Tab>
+              </TabGroup>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthCheck>
   )
 }
 

@@ -8,6 +8,7 @@ import Textbox from "../components/Textbox";
 import { auth } from "../lib/firebase";
 import { ResetEmailToast } from "../lib/toast";
 import { validateEmail } from "../lib/validators";
+import AuthCheck from "../lib/AuthCheck";
 
 const ForgotPassword: NextPage = () => {
   const router = useRouter()
@@ -24,19 +25,21 @@ const ForgotPassword: NextPage = () => {
   }
 
   return (
-    <div className="center">
-      <Card>
-        <h3>Forgot Password?</h3>
+    <AuthCheck reverse>
+      <div className="center">
+        <Card>
+          <h3>Forgot Password?</h3>
 
-        <Textbox placeholder="Email" type="email" 
-        value={email} onChange={setEmail} />
+          <Textbox placeholder="Email" type="email" 
+          value={email} onChange={setEmail} />
 
-        <div className="btn-row">
-          <Button color="blue">Send Reset Email</Button>
-          <Button secondary onClick={() => router.push('/signup?tab=1')}>Back</Button>
-        </div>
-      </Card>
-    </div>
+          <div className="btn-row">
+            <Button color="blue">Send Reset Email</Button>
+            <Button secondary onClick={() => router.push('/signup?tab=1')}>Back</Button>
+          </div>
+        </Card>
+      </div>
+    </AuthCheck>
   )
 }
 
