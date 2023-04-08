@@ -54,7 +54,7 @@ const EditProfile: NextPage = () => {
         setUsernameState('neutral')
       }
     }, 500),
-    []
+    [username]
   )
 
   const edit = async () => {
@@ -67,18 +67,20 @@ const EditProfile: NextPage = () => {
       let downloadUrl = user.photo
       if (image !== user.photo) downloadUrl = await setProfilePic(image, user.uid)
 
-      batch.set(doc(db, `users/${user?.uid}`), {
+      batch.update(doc(db, `users/${user?.uid}`), {
         username: username,
         bio: bio,
-        email: user?.email,
         photo: downloadUrl
       })
-      batch.delete(doc(db, `usernames/${user.username}`))
-      batch.set(doc(db, `usernames/${username}`), { uid: user.uid })
+      
+      if (username !== user.username) {
+        batch.delete(doc(db, `usernames/${user.username}`))
+        batch.set(doc(db, `usernames/${username}`), { uid: user.uid })
+      }
 
       // updates associated posts and comments
-      const posts_q = query(collection(db, 'posts'), where('authorname', '==', user.username))
-      const comments_q = query(collection(db, 'comments'), where('authorname', '==', user.username))
+      const posts_q = query(collection(db, 'posts'), where('uid', '==', user.uid))
+      const comments_q = query(collection(db, 'comments'), where('uid', '==', user.uid))
 
       const posts = await getDocs(posts_q)
       posts.docs.forEach(post => {
@@ -90,7 +92,7 @@ const EditProfile: NextPage = () => {
         batch.update(doc(db, `comments/${comment.id}`), { authorname: username, photo: downloadUrl })
       })
 
-      batch.commit()
+      await batch.commit()
 
       router.push(`/profile/${username}`)
       setLoading(false)
